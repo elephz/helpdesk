@@ -42,7 +42,13 @@ class JobCase extends Model
             return $date->format('H:i d/m/Y');
         }
     }
-
+    public function formattedDate_time()
+    {
+        if($this->created_at){
+            $date = Carbon::parse($this->created_at);
+            return [$date->format('d/m/Y') , $date->format('H:i')];
+        }
+    }
     public function getUser()
     {
        return $this->hasOne(User::class,'id','userId');

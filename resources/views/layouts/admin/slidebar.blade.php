@@ -15,7 +15,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="{{route('admin.dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>กระดานแสดงผล</span></a>
     </li>
 
     <hr class="sidebar-divider">
@@ -23,7 +23,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('admin.user')}}">
             <i class="fas fa-users"></i>
-            <span><b>User</b></span></a>
+            <span><b>ผู้ใช้งาน</b></span></a>
     </li>
 
     <hr class="sidebar-divider">
@@ -31,7 +31,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
-            <span><b>Technician</b></span>
+            <span><b>ช่างเทคนิค</b></span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -47,7 +47,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('admin.jobs')}}">
             <i class="fas fa-cog"></i>
-            <span><b>Jobs</b></span></a>
+            <span><b>จัดการงาน</b></span></a>
     </li>
     <hr class="sidebar-divider">
 
@@ -55,7 +55,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('admin.jobtype')}}">
             <i class="far fa-edit"></i>
-            <span><b>Jobs Type</b></span></a>
+            <span><b>แก้ไขประเภทงาน</b></span></a>
 
     </li>
 

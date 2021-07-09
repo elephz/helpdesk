@@ -4,12 +4,19 @@ body {
 
 .f-thai,
 label,
-input {
+input,
+.toast-message {
     font-family: "Kanit", sans-serif !important;
     letter-spacing: 2px;
     font-weight: bold;
 }
-
+#toast-container>div{
+    padding: 30px 20px 30px 50px;
+}
+.toast-top-right{
+    top: 80px;
+    right: 12px;
+}
 .dropify-wrapper {
     margin: auto;
     height: 300px;

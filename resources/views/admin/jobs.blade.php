@@ -5,6 +5,8 @@
 @section('head')
 <link rel="stylesheet" href="{{asset('plugin/select2/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('plugin/bootstrap-select/bootstrap-select.min.css')}}">
+<link href="{{ asset('css/modalSix.css') }}" rel="stylesheet">
+
 <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
 <style>
     table>thead>tr>th,
@@ -37,8 +39,24 @@
     }
 </style>
 @endsection
-
+@section('modal')
+<div id="modal-container">
+    <div class="modal-background">
+        <div class="modal">
+            <a class='colse-modal' >
+                <i class="fas fa-times"></i>
+            </a>
+            <h2>I'm a Modal</h2>
+            <p>Hear me roar.</p>
+            
+        </div>
+    </div>
+</div>
+@endsection
 @section('content')
+
+
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800 f-thai">จัดการงานแจ้งปัญหา</h1>
 </div>
@@ -111,21 +129,22 @@
                             <tr id="{{$value->id}}">
                                 <td align="center" id="index">{{$key+1}}</td>
                                 <td>{{$value->JobType->name}}</td>
-                                <td>{{$value->formattedDate($value->created_at)}}</td>
+                                <td>{{$value->formattedDate_time()[0]}} <br> <span style="font-size: 12px;">{{$value->formattedDate_time()[1]}}</span></td>
                                 <td>{{$value->getUser->name}}</td>
                                 <!-- <td>{{$value->JobStatus()}}</td> -->
                                 <td class='text-center' id="td-stt">
                                     <span class='badge {{$value->StatusColor()}} text-white py-2 px-3 '>{{$value->JobStatus()}}</span>
                                 </td>
                                 <td>
-                                    <select class="form-control basic">
+                                    <button class="btn btn-info btn-cicle button-test"><i class="far fa-plus-square"></i></button>
+                                    <!-- <select class="form-control basic">
                                         <option value="">กรุณาเลือก</option>
                                         @foreach($tech as $item)
                                         <option value='{{$item->id}}'{{(($value->techId == $item->id) ? 'selected':'')}} >
                                             {{$item->getFullname()}} <b>({{count($item->getTechCount)}})</b> 
                                         </option>
                                         @endforeach
-                                    </select>
+                                    </select> -->
                                 </td>
                                 <td align="center">
                                     <a class="btn btn-primary" href="{{route('admin.jobs.detail',$value->id)}}">
@@ -141,6 +160,7 @@
         </div>
     </div>
 </div>
+
 @endsection
 
 @section('script')
@@ -236,7 +256,10 @@
         $("body").on('change', '.basic', function() {
             let tech_id = $(this).val()
             let job_id = $(this).closest('tr').attr("id")
-            let data = {tech_id,job_id}
+            let data = {
+                tech_id,
+                job_id
+            }
             let me = $(this);
             $.ajax({
                 headers: {
@@ -244,10 +267,10 @@
                 },
                 type: 'PUT',
                 url: `{{route('admin.jobs.assignTech')}}`,
-                data:data,
+                data: data,
                 success: function(response) {
-                    if(response.status){
-                            me.closest('tr')
+                    if (response.status) {
+                        me.closest('tr')
                             .find("td#td-stt > .badge")
                             .text('กำลังดำเนินการ')
                             .removeClass('bg-primary')
@@ -256,6 +279,12 @@
                     }
                 }
             });
+        })
+
+        $('.button-test').click(function() {
+            $('#modal-container').removeAttr('class').addClass("two");
+            $('body').addClass('modal-active');
+            console.log("hey");
         })
     });
 </script>

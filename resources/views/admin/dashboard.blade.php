@@ -12,6 +12,7 @@
     .gold{
         color: #FFD700;
     }
+    
 </style>
 @endsection
 

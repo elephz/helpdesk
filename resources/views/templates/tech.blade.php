@@ -23,9 +23,18 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
+    <link href="{{ asset('css/modalSix.css') }}" rel="stylesheet">
 
     <style>
         .f-thai {
+            font-family: 'Kanit', sans-serif !important;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        .sidebar{
+            transition: 0.4 ease-in-out;
+        }
+        #accordionSidebar .nav-item span{
             font-family: 'Kanit', sans-serif !important;
             letter-spacing: 2px;
             font-weight: bold;

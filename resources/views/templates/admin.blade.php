@@ -41,9 +41,36 @@
             background-color: #2c3e50;
             color: white;
         }
+        .modal-background .modal {
+            position: relative;
+        }
+        .modal-background .modal .colse-modal{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .modal-background .modal .colse-modal i {
+            padding: 10px;
+            color: black;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-background .modal .colse-modal :hover{
+            color: #dc3545;
+        }
         .card-header{
             background-color: #1abc9c;
             color: white !important;
+        }
+        #accordionSidebar{
+            transition: 0.4s;
+        }
+        #accordionSidebar .nav-item span{
+            font-family: 'Kanit', sans-serif !important;
+            letter-spacing: 2px;
+            font-weight: bold;
         }
         @media only screen and (max-width: 600px) { 
             .table-responsive{
@@ -56,6 +83,9 @@
 </head>
 
 <body id="page-top">
+@yield('modal')
+
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -162,6 +192,14 @@
                 if (result.value) {
                     $('#logout-form').submit();
                 }
+            })
+        })
+
+        $(()=>{
+            $(".modal-background .modal .colse-modal").click(()=>{
+                console.log("hey");
+                $(".two").addClass('out');
+                $('body').removeClass('modal-active');
             })
         })
     </script>

@@ -15,7 +15,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="{{route('tech.dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>กระดานแสดงผล</span></a>
     </li>
 
     <!-- Divider -->
@@ -26,7 +26,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('tech.Jobs')}}">
             <i class="fas fa-users"></i>
-            <span><b>Jobs</b></span></a>
+            <span><b>งานที่ได้รับมอบหมาย</b></span></a>
     </li>
    
 

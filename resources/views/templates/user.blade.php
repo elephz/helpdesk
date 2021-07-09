@@ -23,7 +23,7 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <!-- Custom styles for this template -->
 
 
@@ -34,6 +34,7 @@
     <link href="{{ asset('theme/backend/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('css/form.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -325,11 +326,12 @@
 
 
     <script src="{{ asset('theme/backend/vendor/chart.js/Chart.min.js') }}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
-       var label = @json($label);
-       var data = @json($data);
-    //    data = [6,1,3]
-       console.log(label,data);
+        var label = @json($label);
+        var data = @json($data);
+        //    data = [6,1,3]
+        console.log(label, data);
     </script>
     <script src="{{ asset('js/chart-area-demo.js') }}"></script>
 
@@ -339,6 +341,24 @@
                 "pageLength": 6,
                 "bLengthChange": false,
             });
+            toastr.options = {
+                'closeButton': true,
+                'debug': false,
+                'newestOnTop': false,
+                'progressBar': false,
+                'positionClass': 'toast-top-right',
+                'preventDuplicates': false,
+                'showDuration': '1000',
+                'hideDuration': '1000',
+                'timeOut': '3000',
+                'extendedTimeOut': '1000',
+                'showEasing': 'swing',
+                'hideEasing': 'linear',
+                'showMethod': 'fadeIn',
+                'hideMethod': 'fadeOut',
+                'progressBar': true,
+            }
+
         });
 
         $("body").on('submit', "#userForm", function(e) {
@@ -409,6 +429,8 @@
                 success: function(respone) {
                     if (respone.status) {
                         // Cttoas('success', 'บันทึกสำเร็จ')
+
+                        toastr.success('บันทึกสำเร็จ');
                         $("#success").html("<div class='alert alert-success'>");
                         $("#success > .alert-success")
                             .html(
@@ -424,6 +446,9 @@
                         $("[name='detail']").closest(".form-group").removeClass('floating-label-form-group-with-value')
                         $("[name='address']").closest(".form-group").removeClass('floating-label-form-group-with-value')
                         $(".dropify-clear").click()
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000)
                     } else {
                         $("#success").html("<div class='alert alert-danger'>");
                         $("#success > .alert-danger")
@@ -462,19 +487,7 @@
                 $("input[name='Longitude']").val(position.coords.longitude)
             });
         }
-        // var x = document.getElementById("location");
-        // function myFunction() {
-        //   if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition(showPosition);
-        //   } else { 
-        //     x.innerHTML = "Geolocation is not supported by this browser.";
-        //   }
-        // }
-        // function showPosition(position) {
-        //   x.innerHTML = "Latitude: " + position.coords.latitude + 
-        //   "<br>Longitude: " + position.coords.longitude;
-        // }
-        // document.getElementById("location").innerHTML = myFunction();
+
 
 
 

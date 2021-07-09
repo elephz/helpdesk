@@ -1,0 +1,158 @@
+body {
+    overflow-x: hidden !important;
+}
+
+.f-thai,
+label,
+input {
+    font-family: "Kanit", sans-serif !important;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.dropify-wrapper {
+    margin: auto;
+    height: 300px;
+    border-radius: 15px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.dropify-wrapper .dropify-message p {
+    font-size: 24px !important;
+}
+
+.floating-label-form-group input,
+.floating-label-form-group textarea,
+.floating-label-form-group label {
+    font-size: 1rem;
+}
+
+textarea {
+    height: 150px !important;
+}
+
+option {
+    padding: 9px 9px 1px;
+}
+
+#about {
+    height: 100vh;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.full-width {
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+}
+
+.d-flex p {
+    font-size: 24px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #17a2b8;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#dashborad {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background-color: #2c3e50;
+    color: #fff;
+}
+table.dataTable {
+    border-radius: 5px;
+    color: #858796 !important;
+}
+
+.pagination{
+    float: right;
+}
+#dataTable_filter{
+    float: right;
+}
+.bg-gradient-light {
+    background-color: #f8f9fc;
+    background-image: linear-gradient(180deg,#f8f9fc 10%,#c2cbe5 100%);
+    background-size: cover;
+}
+.boxbox{
+    font-family: "Kanit", sans-serif !important;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #343a40 !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    border-radius: 0.5rem !important;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    align-items: center!important;
+    display: flex;
+    flex-wrap: wrap;
+}
+.box-primary{
+    background-color: #2c3e50!important;
+    color: #fff!important;
+}
+.box-dark{
+    background-color: #5a5c69!important;
+    color: #fff!important;
+}
+.flex-item{
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+.flex-icon {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+
+.i-con {
+    color: #dddfeb!important;
+    font-weight: 900;
+    font-size: 4em;
+}
+#myAreaChart{
+    height: 300px;
+}
+.fa-bullhorn{
+    -ms-transform: rotate(-20deg); /* IE 9 */
+    transform: rotate(-20deg);
+}
+
+.badge-total{
+    color: #2c3e50 ;
+    background-color: #fff!important;
+    padding: 15px ;
+    font-size: 2rem;
+    font-weight: bold;
+}

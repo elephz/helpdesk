@@ -30,8 +30,37 @@
         width: 39%;
     }
 
-    .badge {
+    #td-stt .badge {
         font-size: 90%;
+        width: 170px;
+    }
+
+    .borderless td,
+    .borderless th {
+        border: none;
+    }
+
+    .dataTables_filter label {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
+
+    .dataTables_filter label input {
+        margin-left: 10px;
+        padding: 1.25rem;
+        border-radius: 5px;
+    }
+
+    li .info-list-title {
+        min-width: 108px;
+        display: table-cell;
+        color: #ff5938;
+    }
+ 
+    li .info-list-text {
+        color: #888ea8;
     }
 
     .bootstrap-select.btn-group>.dropdown-toggle {
@@ -42,13 +71,78 @@
 @section('modal')
 <div id="modal-container">
     <div class="modal-background">
+
         <div class="modal">
-            <a class='colse-modal' >
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <span class="f-thai">มอบหมายงาน</span>
                 <i class="fas fa-times"></i>
-            </a>
-            <h2>I'm a Modal</h2>
-            <p>Hear me roar.</p>
-            
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="shadow-sm rounded p-4">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table borderless h-100" id="dataTable2" width="100%" cellspacing="0">
+                                        <thead class="bg-light text-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>ชื่อ</th>
+                                                <th>จำนวนงาน</th>
+                                                <th>มอบหมายงาน</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($tech as $key => $item)
+                                            <tr>
+                                                <td align="center" id="index">{{$key+1}}</td>
+                                                <td class="text-left">{{$item->getFullname()}}</td>
+                                                <td>{{count($item->getTechCount)}}</td>
+                                                <td>
+                                                    <button class="btn btn-success"><i class="fab fa-get-pocket"></i></button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <ul class="list-unstyled mt-3">
+                            <li>
+                                <span class="info-list-title">ประเภทงาน</span>
+                                <span class="info-list-text">ระบบอินเทอร์เน็ต</span>
+                            </li>
+                            <li>
+                                <span class="info-list-title">รายละเอียด</span>
+                                <span class="info-list-text">abcd</span>
+                            </li>
+                            <li>
+                                <span class="info-list-title">ที่อยู่</span>
+                                <span class="info-list-text">efg</span>
+                            </li>
+                            <li>
+                                <span class="info-list-title">ชื่อ</span>
+                                <span class="info-list-text">พงษ์ศักษ์1</span>
+                            </li>
+                            <li>
+                                <span class="info-list-title">โทรศัพท์</span>
+                                <span class="info-list-text">0612833879</span>
+                            </li>
+                            <li>
+                                <span class="info-list-title">สถานะ</span>
+                                <span class="info-list-text badge badge-pill badge-primary bg-primary text-white py-2 px-3">งานใหม่</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+
         </div>
     </div>
 </div>
@@ -136,15 +230,9 @@
                                     <span class='badge {{$value->StatusColor()}} text-white py-2 px-3 '>{{$value->JobStatus()}}</span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-info btn-cicle button-test"><i class="far fa-plus-square"></i></button>
-                                    <!-- <select class="form-control basic">
-                                        <option value="">กรุณาเลือก</option>
-                                        @foreach($tech as $item)
-                                        <option value='{{$item->id}}'{{(($value->techId == $item->id) ? 'selected':'')}} >
-                                            {{$item->getFullname()}} <b>({{count($item->getTechCount)}})</b> 
-                                        </option>
-                                        @endforeach
-                                    </select> -->
+                                    <button class="btn btn-info btn-cicle button-test" onclick="customModal({{$value}},'{{$value->JobType->name}}','{{$value->formattedDate($value->created_at)}}','{{$value->getUser->name}}','{{$value->JobStatus()}}')
+                                    "><i class="far fa-plus-square"></i></button>
+
                                 </td>
                                 <td align="center">
                                     <a class="btn btn-primary" href="{{route('admin.jobs.detail',$value->id)}}">
@@ -165,8 +253,6 @@
 
 @section('script')
 
-<script src="{{asset('plugin/select2/select2.min.js')}}"></script>
-<script src="{{asset('plugin/bootstrap-select/bootstrap-select.min.js')}}"></script>
 
 
 <script>
@@ -247,12 +333,23 @@
             }
         });
     })
+
+    function customModal(obj, tname, date, name, status) {
+        console.log(obj, tname, date, name, status);
+        $('#modal-container').removeAttr('class').addClass("two");
+        $('body').addClass('modal-active');
+    }
     $(document).ready(function() {
-        $(".basic").select2({
-            tags: true
-        });
 
         $('#dataTable').DataTable();
+        $('#dataTable2').DataTable({
+            "pageLength": 6,
+            "lengthChange": false,
+            "dom": '<"top"f>rt<"bottom"p><"clear">',
+            "dom": "<'row'<'col-md-6'f><'col-md-6'>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-12'p>>",
+        });
         $("body").on('change', '.basic', function() {
             let tech_id = $(this).val()
             let job_id = $(this).closest('tr').attr("id")
@@ -281,11 +378,7 @@
             });
         })
 
-        $('.button-test').click(function() {
-            $('#modal-container').removeAttr('class').addClass("two");
-            $('body').addClass('modal-active');
-            console.log("hey");
-        })
+
     });
 </script>
 @endsection

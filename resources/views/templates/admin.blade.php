@@ -44,22 +44,7 @@
         .modal-background .modal {
             position: relative;
         }
-        .modal-background .modal .colse-modal{
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-        .modal-background .modal .colse-modal i {
-            padding: 10px;
-            color: black;
-            font-size: 36px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .modal-background .modal .colse-modal :hover{
-            color: #dc3545;
-        }
+       
         .card-header{
             background-color: #1abc9c;
             color: white !important;
@@ -196,7 +181,7 @@
         })
 
         $(()=>{
-            $(".modal-background .modal .colse-modal").click(()=>{
+            $("#modal-container .modal-background .modal .modal-header i").click(()=>{
                 console.log("hey");
                 $(".two").addClass('out');
                 $('body').removeClass('modal-active');

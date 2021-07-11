@@ -26,7 +26,6 @@ class JobsController extends Controller
 
     public function assignTech(Request $request)
     {
-        // return response()->json(["status" => true]);
         try {
             $job = JobCase::where('id',$request->jobsid)->first();
             $job->techId = $request->techid;

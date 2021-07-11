@@ -3,6 +3,8 @@
 @section('title','Dashboard')
 
 @section('head')
+<link href="{{ asset('css/loader.css') }}" rel="stylesheet">
+
 <style>
     body {
         font-family: 'Kanit', sans-serif !important;
@@ -79,6 +81,10 @@
         transform: translateX(26px);
     }
 
+    .circle {
+        background: black !important;
+    }
+
     /* Rounded sliders */
     .slider.round {
         border-radius: 34px;
@@ -109,7 +115,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <tr style="position: relative;">
+                                <td colspan='4'>
+                                    <div class="container-loader">
+                                        <div class="loader">
+                                            <div class="circle" id="a"></div>
+                                            <div class="circle" id="b"></div>
+                                            <div class="circle" id="c"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                             @foreach($users as $key => $value)
+                           
                             <tr id="{{$value->id}}">
                                 <td align="center" id="index">{{$key+1}}</td>
                                 <td id="name">{{$value->getFullname()}}</td>
@@ -169,22 +187,22 @@
         // $('#dataTable').DataTable();
 
         $("body").on("change", ".switch", function() {
-                let val = $(this).find('input').val();
-                let data = {'data':val}
+            let val = $(this).find('input').val();
+            let data = {
+                'data': val
+            }
+            let me = $(this).closest('tr')
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 },
                 type: 'PUT',
                 url: `{{route('admin.tech.accept')}}`,
-                data:data,
+                data: data,
                 success: function(response) {
-                    // if(response.status){
-                    //     setTimeout(()=>{
-                    //         $(`tr#${val}`).fadeOut('slow');
-                    //     },1500)
-                    // }
-                 
+                    setTimeout(() => {
+                        me.fadeOut('slow')
+                    }, 1200)
                 }
             });
         })

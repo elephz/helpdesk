@@ -67,7 +67,7 @@ class TechController extends Controller
             'jobTypelabel' =>  $jobTypelabel,
             'totaltime' => $totaltime,
             'timearr' => $timeArr,
-            'avg' => date('H:i', array_sum(array_map('strtotime', $timeArr)) / count($timeArr))
+            'avg' => date('H:i', array_sum(array_map('strtotime', $timeArr)) / (count($timeArr) ?? 0))
         ]);
     }
     public function calculate($value,$max)

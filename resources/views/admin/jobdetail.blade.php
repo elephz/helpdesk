@@ -82,10 +82,10 @@
         <table  class="table table-bordered rounded">
             <thead>
                 <tr>
-                    <th>แจ้งเมื่อ</th>
-                    <th>รับแจ้งเมื่อ</th>
-                    <th>ผู้รับแจ้ง</th>
-                    <th>สำเร็จเมื่อ</th>
+                    <th class="f-thai">แจ้งเมื่อ</th>
+                    <th class="f-thai">รับแจ้งเมื่อ</th>
+                    <th class="f-thai">ผู้รับแจ้ง</th>
+                    <th class="f-thai">สำเร็จเมื่อ</th>
                 </tr>
             </thead>
             <tbody>

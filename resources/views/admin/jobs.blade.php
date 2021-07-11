@@ -6,14 +6,27 @@
 <link rel="stylesheet" href="{{asset('plugin/select2/select2.min.css')}}">
 <link rel="stylesheet" href="{{asset('plugin/bootstrap-select/bootstrap-select.min.css')}}">
 <link href="{{ asset('css/modalSix.css') }}" rel="stylesheet">
+<link href="{{ asset('css/loader.css') }}" rel="stylesheet">
+
 
 <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
 <style>
     table>thead>tr>th,
-    table>tbody>tr>td {
+    table>tbody>tr>td,
+    .jobinfo li span {
         font-family: 'Kanit', sans-serif !important;
         letter-spacing: 2px;
         font-weight: bold;
+    }
+
+    .jobinfo li span.title {
+        color: #ff5938;
+
+    }
+
+    .jobinfo li span.detial {
+        padding-left: 15px;
+        text-align: left;
     }
 
     .btn-round {
@@ -53,16 +66,37 @@
         border-radius: 5px;
     }
 
-    li .info-list-title {
-        min-width: 108px;
-        display: table-cell;
-        color: #ff5938;
-    }
- 
-    li .info-list-text {
-        color: #888ea8;
+    li.border-0:not(:last-child) {
+        border-bottom: 1px solid #e3e6f0 !important;
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
+    #tname {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: right;
+        width: 100%;
+    }
+
+    .al-msg {
+        width: 100%;
+        text-align: right;
+        color: #D8000C;
+        background-color: #FFBABA;
+        padding: 15px;
+        opacity: 0;
+        transition: 0.3s;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    button.btn-grid{
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        grid-column-gap: 5px;
+       
+        align-items: center;
+    }
     .bootstrap-select.btn-group>.dropdown-toggle {
         margin-bottom: 0px !important;
     }
@@ -99,7 +133,9 @@
                                                 <td class="text-left">{{$item->getFullname()}}</td>
                                                 <td>{{count($item->getTechCount)}}</td>
                                                 <td>
-                                                    <button class="btn btn-success"><i class="fab fa-get-pocket"></i></button>
+                                                    <button class="btn btn-success" onclick='selectT("{{$item->getFullname()}}","{{$item->id}}")'>
+                                                        <i class="far fa-arrow-alt-circle-right"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -110,30 +146,36 @@
                         </div>
                     </div>
                     <div class="col-4">
-                        <ul class="list-unstyled mt-3">
-                            <li>
-                                <span class="info-list-title">ประเภทงาน</span>
-                                <span class="info-list-text">ระบบอินเทอร์เน็ต</span>
+                        <p class="f-thai text-left">รายละเอียดงาน</p>
+                        <ul class="list-group border-0 jobinfo">
+                            <li class="list-group-item d-flex flex-column  align-items-start border-0">
+                                <span class='title'>ประเภทงาน</span>
+                                <span class='detial' id='jobtype'></span>
                             </li>
-                            <li>
-                                <span class="info-list-title">รายละเอียด</span>
-                                <span class="info-list-text">abcd</span>
+                            <li class="list-group-item d-flex flex-column  align-items-start border-0">
+                                <span class='title'>รายละเอียด</span>
+                                <span class='detial' id='detail'></span>
                             </li>
-                            <li>
-                                <span class="info-list-title">ที่อยู่</span>
-                                <span class="info-list-text">efg</span>
+                            <li class="list-group-item d-flex flex-column  align-items-start border-0">
+                                <span class='badge badge-pill badge-primary px-3 py-2'>ช่างเทคนิค</span>
+                                <span class='detial' id='tname'>
+                                    <i class="fas fa-question"></i>
+                                </span>
                             </li>
-                            <li>
-                                <span class="info-list-title">ชื่อ</span>
-                                <span class="info-list-text">พงษ์ศักษ์1</span>
-                            </li>
-                            <li>
-                                <span class="info-list-title">โทรศัพท์</span>
-                                <span class="info-list-text">0612833879</span>
-                            </li>
-                            <li>
-                                <span class="info-list-title">สถานะ</span>
-                                <span class="info-list-text badge badge-pill badge-primary bg-primary text-white py-2 px-3">งานใหม่</span>
+                            <input type="hidden" name='job_id'>
+                            <input type="hidden" name='t_id'>
+                            <li class="list-group-item d-flex flex-column  align-items-start border-0">
+                                <button class="btn btn-info btn-block rounded-pill" onclick="save()" style="position: relative;">
+                                    <span class='save-text'> บันทึก </span>
+                                    <div class="container-loader">
+                                        <div class="loader">
+                                            <div class="circle" id="a"></div>
+                                            <div class="circle" id="b"></div>
+                                            <div class="circle" id="c"></div>
+                                        </div>
+                                    </div>
+                                </button>
+                                <span class='al-msg shadow-sm'><i class="fas fa-exclamation-circle"></i> กรุณาเลือกช่างเทคนิค !!!</span>
                             </li>
                         </ul>
                     </div>
@@ -230,9 +272,21 @@
                                     <span class='badge {{$value->StatusColor()}} text-white py-2 px-3 '>{{$value->JobStatus()}}</span>
                                 </td>
                                 <td>
-                                    <button class="btn btn-info btn-cicle button-test" onclick="customModal({{$value}},'{{$value->JobType->name}}','{{$value->formattedDate($value->created_at)}}','{{$value->getUser->name}}','{{$value->JobStatus()}}')
-                                    "><i class="far fa-plus-square"></i></button>
-
+                                    @if($value->jobStatus == 1)
+                                    <button class="btn btn-primary btn-block button-test" onclick="customModal({{$value}},'{{$value->JobStatus()}}')">
+                                        <i class="far fa-plus-square"></i>
+                                    </button>
+                                    @elseif($value->jobStatus == 2)
+                                    <button class="btn btn-success btn-block button-test btn-grid" onclick="customModal({{$value}},'{{$value->JobStatus()}}',{{$value->getTech}})">
+                                        <i class="fas fa-user-edit"></i>  
+                                        <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span> 
+                                    </button>
+                                    @else
+                                    <button class="btn btn-success  btn-block button-test btn-grid" >
+                                        <i class="fas fa-check"></i>
+                                       <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span>
+                                    </button>
+                                    @endif
                                 </td>
                                 <td align="center">
                                     <a class="btn btn-primary" href="{{route('admin.jobs.detail',$value->id)}}">
@@ -334,10 +388,66 @@
         });
     })
 
-    function customModal(obj, tname, date, name, status) {
-        console.log(obj, tname, date, name, status);
+    function selectT(name, id) {
+        $(".jobinfo #tname").text(name)
+        $(".jobinfo input[name='t_id']").val(id)
+    }
+
+    function customModal(obj, status,tech = null) {
+        if(tech){
+            $(".jobinfo #tname").text(tech.name+" "+tech.lastname)
+            $(".jobinfo input[name='t_id']").val(tech.id)
+        }else{
+            $(".jobinfo #tname").html('<i class="fas fa-question"></i>')
+        }
+        $(".jobinfo #jobtype").text(obj.job_type.name)
+        $(".jobinfo #detail").text(obj.caseDetail)
+        $(".jobinfo #address").text(obj.address)
+        $(".jobinfo #name").text(obj.get_user.name + " " + obj.get_user.lastname)
+        $(".jobinfo #phone").text(obj.get_user.phone)
+        $(".jobinfo #status").text(status)
+        $(".jobinfo input[name='job_id']").val(obj.id)
         $('#modal-container').removeAttr('class').addClass("two");
         $('body').addClass('modal-active');
+    }
+
+    function save() {
+        const techid = $(".jobinfo input[name='t_id']").val()
+        const jobsid = $(".jobinfo input[name='job_id']").val()
+
+        if (!techid || !jobsid) {
+            $("span.al-msg").css('opacity', '1')
+            setTimeout(() => {
+                $("span.al-msg").css('opacity', '0')
+            }, 3000)
+            return
+        }
+        $(".save-text").css('opacity',0)
+        $(".loader").css('opacity',1)
+        let data = {
+            techid,
+            jobsid
+        }
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            },
+            type: 'PUT',
+            url: `{{route('admin.jobs.assignTech')}}`,
+            data: data,
+            success: function(response) {
+                if (response.status) {
+                    setTimeout(() => {
+                        $("#modal-container .modal-background .modal .modal-header i").click()
+                    }, 1000)
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1100)
+                } else {
+                    console.log("error");
+                }
+            }
+        });
     }
     $(document).ready(function() {
 
@@ -358,24 +468,7 @@
                 job_id
             }
             let me = $(this);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                },
-                type: 'PUT',
-                url: `{{route('admin.jobs.assignTech')}}`,
-                data: data,
-                success: function(response) {
-                    if (response.status) {
-                        me.closest('tr')
-                            .find("td#td-stt > .badge")
-                            .text('กำลังดำเนินการ')
-                            .removeClass('bg-primary')
-                            .addClass('bg-warning')
-                        console.log("success");
-                    }
-                }
-            });
+
         })
 
 

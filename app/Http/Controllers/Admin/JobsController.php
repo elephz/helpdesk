@@ -26,10 +26,10 @@ class JobsController extends Controller
 
     public function assignTech(Request $request)
     {
-        return response()->json(["status" => true]);
+        // return response()->json(["status" => true]);
         try {
-            $job = JobCase::where('id',$request->job_id)->first();
-            $job->techId = $request->tech_id;
+            $job = JobCase::where('id',$request->jobsid)->first();
+            $job->techId = $request->techid;
             $job->jobStatus = 2;
             $job->assginTime = Carbon::now();
             $job->save();

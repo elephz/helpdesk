@@ -1,0 +1,44 @@
+
+  .container-loader {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+  .loader {
+    margin: auto;
+    display: flex;
+    height: 20px;
+    opacity: 0;
+    transition: 0.3s;
+  }
+  .circle {
+    width: 25px;
+    height: 25px;
+    background: white;
+    border-radius: 50%;
+    animation: jump 1s linear infinite;
+    margin: 0 10px;
+  }
+  
+  #b {
+    animation-delay: 0.2s;
+  }
+  #c {
+    animation-delay: 0.4s;
+  }
+  @keyframes jump {
+    0% {
+      margin-top: 0;
+    }
+    35% {
+      margin-top: -15px;
+    }
+    70% {
+      margin-top: 0px;
+    }
+  }
+  

@@ -19,7 +19,7 @@ class User
         if(Auth::check() && Auth::user()->isUser()){
             return $next($request);
         }else{
-            abort(403, 'Unauthorized action');
+            return redirect()->back();
         }
     }
 }

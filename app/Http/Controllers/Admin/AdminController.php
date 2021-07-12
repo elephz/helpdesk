@@ -56,7 +56,7 @@ class AdminController extends Controller
         }
         $user_trophy = JobCase::groupBy('userId')->select('userId', DB::raw('count(*) as total')) ->orderBy('total', 'desc') ->first();
         $tech_trophy = JobCase::groupBy('techId')->select('techId', DB::raw('count(*) as total')) ->orderBy('total', 'desc') ->first();
-        
+       
         return view('admin.dashboard')->with([
             "user" => $user->count(),
             "tech" => $tech->count(),

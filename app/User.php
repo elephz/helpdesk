@@ -102,6 +102,6 @@ class User extends Authenticatable
 
     public function getTechCount()
     {
-        return $this->hasMany(JobCase::class,'techId','id')->where('jobStatus','<','4');
+        return $this->hasMany(JobCase::class,'techId','id')->where('jobStatus','<','3');
     }
 }

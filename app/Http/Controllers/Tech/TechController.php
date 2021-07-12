@@ -58,7 +58,7 @@ class TechController extends Controller
                         $total % 60);
         // dd($formatted);
         //   dd($timeArr,max($timeArr),min($timeArr),$totaltime,);
-       
+      
         return view('tech.dashboard')->with([
             'jobs' => count($job),
             'success' => $this->calculate(count($success), count($job)),
@@ -67,12 +67,15 @@ class TechController extends Controller
             'jobTypelabel' =>  $jobTypelabel,
             'totaltime' => $totaltime,
             'timearr' => $timeArr,
-            'avg' => date('H:i', array_sum(array_map('strtotime', $timeArr)) / (count($timeArr) ?? 0))
+            'avg' => count($timeArr) ? date('H:i', array_sum(array_map('strtotime', $timeArr)) / count($timeArr)) : 0
         ]);
     }
     public function calculate($value,$max)
    {
-       return  number_format(($value * 100) / $max,2) ;
+       if(!$value || !$max){
+           return 0;
+       }
+       return  number_format(($value * 100) / $max,2) ?? 0 ;
    }
     public function Jobs()
     {

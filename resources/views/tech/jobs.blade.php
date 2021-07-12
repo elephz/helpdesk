@@ -55,7 +55,7 @@
                                 <td>{{$value->formattedDate($value->created_at)}}</td>
                                 <td>{{$value->getUser->name}}</td>
                                 <td align="center" id='status'>
-                                    <span class='info-list-text badge badge-pill badge-primary {{$value->StatusColor()}} text-white py-2 px-3'>{{$value->JobStatus()}}</span>
+                                    <span class='info-list-text w-100 badge badge-pill badge-primary {{$value->StatusColor()}} text-white py-2 px-3'>{{$value->JobStatus()}}</span>
                                 </td>
                                 <td align="center">
                                     <a class="btn btn-primary" href="{{route('tech.jobs.detail',$value->id)}}">
@@ -86,7 +86,7 @@
                                     @break
 
                                     @case(3)
-                                    <a href="{{route('tech.Jobs.success.detail',$value->id)}}" class="btn btn-success" title="สรุปการดำเนินงาน" >
+                                    <a href="{{route('tech.Jobs.success.detail',$value->id)}}" class="btn btn-success" title="สรุปการดำเนินงาน">
                                         <i class="fas fa-clipboard"></i>
                                     </a>
 
@@ -247,10 +247,9 @@
                 console.log(response);
                 if (response.status) {
                     Cttoas('success', 'บันทึกสำเร็จ')
-                    let html = `<span class="info-list-text badge badge-pill badge-primary bg-warning text-white py-2 px-3">กำลังดำเนินการ</span>`;
-                    let htmlbtn = `{{ Auth::user()->name }}`;
-                    $(`tr#${id}`).find("td#status").empty().html(html);
-                    $(`tr#${id}`).find("td#btn").empty().html(htmlbtn);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 500)
                 } else {
                     if (response.type == 'activedted') {
                         Cttoas('error', 'เกิดข้อผิดพลาดกรุณาลองใหม่อีกครั้ง')
@@ -290,10 +289,9 @@
                         console.log(response);
                         if (response.status) {
                             Cttoas('success', 'บันทึกสำเร็จ')
-                            let html = `<span class="info-list-text badge badge-pill badge-primary bg-warning text-white py-2 px-3">กำลังดำเนินการ</span>`;
-                            let htmlbtn = `{{ Auth::user()->name }}`;
-                            $(`tr#${id}`).find("td#status").empty().html(html);
-                            $(`tr#${id}`).find("td#btn").empty().html(htmlbtn);
+                            setTimeout(() => {
+                                location.reload();
+                            }, 500)
                         } else {
                             if (response.type == 'activedted') {
                                 Cttoas('error', 'เกิดข้อผิดพลาดกรุณาลองใหม่อีกครั้ง')

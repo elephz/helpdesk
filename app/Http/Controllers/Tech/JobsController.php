@@ -13,8 +13,7 @@ class JobsController extends Controller
     public function index()
     {
         $Userid = Auth::id();
-        $job = JobCase::where('techId', $Userid)->get();
-      
+        $job = JobCase::where('techId', $Userid)->orderBy('updated_at','desc')->get();
         return view('tech.jobs')->with([
             'jobs' => $job,
             ]);

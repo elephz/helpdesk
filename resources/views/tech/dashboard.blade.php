@@ -50,7 +50,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1 f-thai">
                                 ระยะเวลาในการปฏิบัติงานสั้นที่สุด</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            {{min($timearr)}}
+                            {{ $timearr ? min($timearr) : '0' }}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -72,7 +72,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                        {{max($timearr)}}
+                                        {{ $timearr ? max($timearr) : '0' }}
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1 f-thai">
                                 ระยะเวลาเฉลี่ย</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{$avg}}
+                                {{$avg ?? 0}}
                             </div>
                         </div>
                         <div class="col-auto">

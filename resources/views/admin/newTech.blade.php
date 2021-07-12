@@ -115,19 +115,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tr style="position: relative;">
-                                <td colspan='4'>
-                                    <div class="container-loader">
-                                        <div class="loader">
-                                            <div class="circle" id="a"></div>
-                                            <div class="circle" id="b"></div>
-                                            <div class="circle" id="c"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
                             @foreach($users as $key => $value)
-                           
                             <tr id="{{$value->id}}">
                                 <td align="center" id="index">{{$key+1}}</td>
                                 <td id="name">{{$value->getFullname()}}</td>
@@ -200,9 +188,10 @@
                 url: `{{route('admin.tech.accept')}}`,
                 data: data,
                 success: function(response) {
+                    me.html('<td colspan="4" class="text-center py-4 text-dark"><i class="fas fa-check"></i></td>')
                     setTimeout(() => {
                         me.fadeOut('slow')
-                    }, 1200)
+                    }, 500)
                 }
             });
         })

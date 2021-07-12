@@ -39,6 +39,10 @@
         display: none;
     }
 
+    .card-body #dataTable_filter {
+        display: block;
+    }
+
     .custom-select {
         width: 39%;
     }
@@ -90,15 +94,45 @@
         border-radius: 5px;
         margin-top: 10px;
     }
-    button.btn-grid{
+
+    button.btn-grid {
         display: grid;
         grid-template-columns: 30px 1fr;
         grid-column-gap: 5px;
-       
+
         align-items: center;
     }
+
     .bootstrap-select.btn-group>.dropdown-toggle {
         margin-bottom: 0px !important;
+    }
+
+    #horz-list ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        text-align: center;
+    }
+
+    #horz-list ul li {
+        display: inline;
+    }
+
+    #horz-list ul li a {
+        text-decoration: none;
+        padding: 0.2em 1.1em;
+        border: none;
+        margin: 0 0 5px -6px;
+        border-radius: 5px;
+        color: #000;
+        transition: 0.3s;
+
+    }
+
+
+    #horz-list ul li a:hover , .a-active  {
+        background: #2c3e50;
+        color: #fff !important;
     }
 </style>
 @endsection
@@ -211,37 +245,7 @@
 </div>
 @endif
 <!-- alert row -->
-<!-- modal insert-->
-<div class="modal fade" id="ModalInsert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body p-5">
-                <form class="user" method="POST" id="insert-form">
-                    @csrf
-                    <div class="form-group row">
-                        <div class="col-sm-8 mb-3 mb-sm-0">
-                            <input type="text" class="form-control form-control-user" name='name' id="exampleName" placeholder="ประเภทงาน" required>
-                        </div>
-                        <div class="col-sm-4">
-                            <button type="submit" class="btn btn-primary btn-user btn-block" id="btn-save">
-                                เพิ่ม
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- modal insert-->
 <div class="row">
     <div class="col-12">
@@ -278,13 +282,13 @@
                                     </button>
                                     @elseif($value->jobStatus == 2)
                                     <button class="btn btn-success btn-block button-test btn-grid" onclick="customModal({{$value}},'{{$value->JobStatus()}}',{{$value->getTech}})">
-                                        <i class="fas fa-user-edit"></i>  
-                                        <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span> 
+                                        <i class="fas fa-user-edit"></i>
+                                        <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span>
                                     </button>
                                     @else
-                                    <button class="btn btn-success  btn-block button-test btn-grid" >
+                                    <button class="btn btn-success  btn-block button-test btn-grid">
                                         <i class="fas fa-check"></i>
-                                       <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span>
+                                        <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span>
                                     </button>
                                     @endif
                                 </td>
@@ -310,94 +314,16 @@
 
 
 <script>
-    function edit(id, name) {
-        console.log(id, name)
-        $("input[name='ed-jobtype']").val(name)
-        $("input[name='ed-id']").val(id)
-        $("#ModalUpdate").modal('show')
-    }
-
-    function remove(id, name) {
-        let row = $(`tr#${id}`);
-        swal({
-            title: 'ลบประเภทสินค้า',
-            text: `ยืนยันการลบ${name}`,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'ยืนยัน',
-            cancelButtonText: 'ปิด',
-            padding: '2em'
-        }).then(function(result) {
-            if (result.value) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    type: 'DELETE',
-                    url: `jobtype/delete/${id}`,
-                    success: function(response) {
-                        row.fadeOut('fast')
-                    }
-                });
-            }
-        })
-    }
-    $("body").on('click', "#btn-save", function(e) {
-        e.preventDefault();
-        let html = "";
-        $.ajax({
-            type: 'POST',
-            url: `{{route('admin.jobtype.store')}}`,
-            data: $("#insert-form").serialize(),
-            success: function(response) {
-                console.log(response.status);
-                if (response.status) {
-                    $("#ModalInsert").modal('hide')
-                    setTimeout(() => {
-                        location.reload()
-                    }, 1000)
-                }
-            }
-        });
-    });
-    $("body").on('click', "#btn-edit", function(e) {
-        e.preventDefault();
-        let name = $("input[name='ed-jobtype']").val();
-        let id = $("input[name='ed-id']").val();
-        let job = {
-            name,
-            id
-        };
-        let row = $(`tr#${id}`).find("td#name");
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            type: 'PUT',
-            url: `jobtype/update`,
-            data: job,
-            success: function(response) {
-                console.log(response);
-                if (response.status) {
-                    row.text(response.text)
-                    $("#ModalUpdate").modal('hide')
-                }
-
-            }
-        });
-    })
-
     function selectT(name, id) {
         $(".jobinfo #tname").text(name)
         $(".jobinfo input[name='t_id']").val(id)
     }
 
-    function customModal(obj, status,tech = null) {
-        if(tech){
-            $(".jobinfo #tname").text(tech.name+" "+tech.lastname)
+    function customModal(obj, status, tech = null) {
+        if (tech) {
+            $(".jobinfo #tname").text(tech.name + " " + tech.lastname)
             $(".jobinfo input[name='t_id']").val(tech.id)
-        }else{
+        } else {
             $(".jobinfo #tname").html('<i class="fas fa-question"></i>')
         }
         $(".jobinfo #jobtype").text(obj.job_type.name)
@@ -422,8 +348,8 @@
             }, 3000)
             return
         }
-        $(".save-text").css('opacity',0)
-        $(".loader").css('opacity',1)
+        $(".save-text").css('opacity', 0)
+        $(".loader").css('opacity', 1)
         let data = {
             techid,
             jobsid
@@ -451,11 +377,26 @@
     }
     $(document).ready(function() {
 
-        $('#dataTable').DataTable();
+        $('#dataTable').DataTable({
+            "dom": "<'row'<'col-md-6'l><'col-md-6'f>>" +
+                "<'row'<'col-12 ct-fillter d-flex py-2'>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-12'p>>",
+
+        });
+        let text = `<div id="horz-list" class='pt-2 pl-3'>
+            <ul>
+                <li><a href="" class='f-thai 1 a-active' onclick=filter('',event,1) >ทั้งหมด</a></li>
+                <li><a href="" class='f-thai 2' onclick=filter('งานใหม่',event,2) >งานใหม่</a></li>
+                <li><a href="" class='f-thai 3' onclick=filter('กำลังดำเนินการ',event,3) >กำลังดำเนินการ</a></li>
+                <li><a href="" class='f-thai 4' onclick=filter('เสร็จสิ้น',event,4) >เสร็จสิ้น</a></li>
+                <li><a href="" class='f-thai 5' onclick=filter('ยกเลิก',event,5) >ยกเลิก</a></li>
+            </ul>
+        </div>`
+        $(".ct-fillter").html(text);
         $('#dataTable2').DataTable({
             "pageLength": 6,
             "lengthChange": false,
-            "dom": '<"top"f>rt<"bottom"p><"clear">',
             "dom": "<'row'<'col-md-6'f><'col-md-6'>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-12'p>>",
@@ -473,5 +414,16 @@
 
 
     });
+    
+    function filter(val, e,me) {
+        e.preventDefault()
+       
+        $("#horz-list ul li a").removeClass('a-active')
+        $("#horz-list ul li a."+me).addClass('a-active')
+        var table = $('#dataTable').DataTable();
+        table.columns([4])
+            .search(val)
+            .draw();
+    }
 </script>
 @endsection

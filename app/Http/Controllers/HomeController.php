@@ -23,6 +23,22 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->isAdmin()) {
+
+            return view('admin.dashboard');
+
+        } else if (auth()->user()->isUser()) {
+
+            return view('templates.user');
+
+        } else if (auth()->user()->isTech()) {
+
+            return view('tech.dashboard');
+            
+        } else if (auth()->user()->waitTech()) {
+
+            return view('tech.wait');
+        }
         return view('home');
     }
 }

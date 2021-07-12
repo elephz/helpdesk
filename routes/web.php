@@ -22,6 +22,11 @@ Route::get('/hasBeenBanned', function () {
     return view('banned');
 })->name('banned');
 
+Route::get('/pending', function () {
+    return view('tech.wait');
+})->name('tech.wait');
+
+
 Auth::routes();
 
 Route::group(['middleware' => 'CheckBlocked'], function () {
@@ -30,7 +35,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::group(['middleware' => 'Admin'], function () {
         Route::get('/', 'AdminController@index')->name('admin.dashboard');
-
+      
         Route::group(['prefix' => 'jobtype'], function () {
             Route::get('/', 'JobsTypeController@index')->name('admin.jobtype');
             Route::post('/', 'JobsTypeController@store')->name('admin.jobtype.store');
@@ -68,7 +73,6 @@ Route::group(['middleware' => 'User'], function () {
 Route::group(['middleware' => 'Tech'], function () {
     Route::group(['prefix' => 'tech', 'namespace' => 'Tech'], function () {
         Route::get('/', 'TechController@index')->name('tech.dashboard');
-        Route::get('/wait', 'TechController@wait')->name('tech.wait');
         Route::get('/Jobs', 'JobsController@index')->name('tech.Jobs');
         Route::put('/Jobs/{id}', 'JobsController@accept')->name('tech.Jobs.accept');
         Route::put('/Jobs/success/{id}', 'JobsController@success')->name('tech.Jobs.success');

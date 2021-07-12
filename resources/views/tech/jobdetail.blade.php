@@ -41,7 +41,7 @@
 </div>
 <div class="row">
     <div class="col-md-5 col-12">
-        <img src="{{asset('images/'.$jobs->image)}}" alt="" class='w-100 shadow rounded'>
+        <img src="{{$jobs->getImg()}}" alt="" class='w-100 shadow rounded'>
     </div>
     <div class="col-md-7 col-12">
         <ul class='list-unstyled mt-3'>
@@ -81,9 +81,7 @@
 </div>
 <div class="row my-4">
     <div class="col-md-10 col-12 mx-auto">
-        <iframe width="100%" height="500" src="https://maps.google.com/maps?q=18.802395125056425,98.96698776786003&output=embed"></iframe>
-        ,
-        <!-- <iframe width="100%" height="500" src="https://maps.google.com/maps?q={{$jobs->Latitude}},{{$jobs->Longitude}}&output=embed"></iframe> -->
+        <iframe width="100%" height="500" src="https://maps.google.com/maps?q={{$jobs->Latitude}},{{$jobs->Longitude}}&output=embed"></iframe>
     </div>
 </div>
 @endsection
@@ -103,20 +101,22 @@
             cancelButtonText: 'ปิด',
             padding: '2em'
         }).then(function(result) {
-
+      
             if (result.value) {
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                     },
                     type: 'PUT',
-                    url: `Jobs/${id}`,
+                    url: `/tech/Jobs/${id}`,
                     cache: false,
                     success: function(response) {
                         console.log(response);
                         if (response.status) {
                             Cttoas('success', 'บันทึกสำเร็จ')
-                            $(`tr#${id}`).fadeOut('slow');
+                           setTimeout(()=>{
+                            location.reload();
+                           },500)
                         } else {
                             if (response.type == 'activedted') {
                                 Cttoas('error', 'เกิดข้อผิดพลาดกรุณาลองใหม่อีกครั้ง')

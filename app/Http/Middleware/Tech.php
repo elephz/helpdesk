@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Auth;
 
 use Closure;
+use Faker\Provider\Lorem;
 
 class Tech
 {
@@ -17,9 +18,16 @@ class Tech
     public function handle($request, Closure $next)
     {
         if(Auth::check() && Auth::user()->isTech()){
+            if(Auth::user()->waitTech()){
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->route('tech.wait');
+
+            }
             return $next($request);
         }else{
-            abort(403, 'Unauthorized action');
+            return redirect()->back();
         }
     }
 }

@@ -43,7 +43,6 @@ class UserController extends Controller
 
     public function acceptTech(Request $request)
     {
-        return response()->json(["status" => true]);
 
         try {
             $user = User::where('id', $request->data)->first();

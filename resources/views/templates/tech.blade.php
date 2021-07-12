@@ -45,6 +45,8 @@
 </head>
 
 <body id="page-top">
+@yield('modal')
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 

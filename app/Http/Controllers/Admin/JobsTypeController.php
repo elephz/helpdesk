@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\CaseType;
 use DB;
+use Session;
 
 
 class JobsTypeController extends Controller
@@ -18,15 +19,20 @@ class JobsTypeController extends Controller
     
     public function update(Request $request)
     {
+  
         try {
-            $job = CaseType::where('id', $request->id)->first();
-            $job->name = $request->name;
+            $job = CaseType::where('id', $request->ed_id)->first();
+            $job->name = $request->ed_jobtype;
             $job->save();
             DB::commit();
-            return response()->json(["status" => true,"text"=>$job->name]);
+            Session::flash('message', 'แก้ไขสำเร็จ');
+            Session::flash('alert-class', 'alert-success');
+            return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(["status" => false]);
+            Session::flash('message', 'แก้ไขไม่สำเร็จ');
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->back();
         }
     }
 
@@ -46,10 +52,14 @@ class JobsTypeController extends Controller
             $job->name = $request->name;
             $job->save();
             DB::commit();
-            return response()->json(["status" => true,"name"=>$job->name,"id"=>$job->id,"date"=>$job->formattedDate()]);
+            Session::flash('message', 'บันทึกสำเร็จ');
+            Session::flash('alert-class', 'alert-success');
+            return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(["status" => false]);
+            Session::flash('message', 'บันทึกไม่สำเร็จ');
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->back();
         }
     }
 }

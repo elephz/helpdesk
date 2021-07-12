@@ -3,6 +3,9 @@
 @section('title','Dashboard')
 
 @section('head')
+<link href="{{ asset('css/modalSix.css') }}" rel="stylesheet">
+<link href="{{ asset('css/loader.css') }}" rel="stylesheet">
+
 <style>
     #btn {
         display: grid;
@@ -23,7 +26,58 @@
 </style>
 @endsection
 
+@section('modal')
+<div id="modal-container">
+    <div class="modal-background">
+
+        <div class="modal">
+            <div class="modal-header d-flex justify-content-between align-items-center">
+                <span class="f-thai">รายละเอียดการดำเนินงาน</span>
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="shadow-sm rounded p-4">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table borderless h-100" id="dataTable2" width="100%" cellspacing="0">
+                                        <thead class="bg-light text-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>ชื่อ</th>
+                                                <th>จำนวนงาน</th>
+                                                <th>มอบหมายงาน</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <form action="/action_page.php" class="w-100 text-left">
+                            <div class="form-group">
+                                <label for="email">รายละเอียด</label>
+                                <textarea name="detail" id="email" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+
+
 @section('content')
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800 f-thai">จัดการงานแจ้งปัญหา</h1>
 </div>
@@ -138,6 +192,12 @@
 <script>
     $(function() {
         $('button').tooltip();
+
+        $("#modal-container .modal-background .modal .modal-header i").click(() => {
+            console.log("hey");
+            $(".two").addClass('out');
+            $('body').removeClass('modal-active');
+        })
     });
 
     function successReport(id) {
@@ -236,6 +296,10 @@
     }
 
     function successJob(id) {
+
+        $('#modal-container').removeAttr('class').addClass("two");
+        $('body').addClass('modal-active');
+        return
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')

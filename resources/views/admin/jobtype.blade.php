@@ -53,7 +53,7 @@
                 </button>
             </div>
             <div class="modal-body p-5">
-                <form class="user" method="POST" id="insert-form">
+                <form class="user" action="{{route('admin.jobtype.store')}}" method="POST" id="insert-form">
                     @csrf
                     <div class="form-group row">
                         <div class="col-sm-8 mb-3 mb-sm-0">
@@ -77,8 +77,10 @@
 <div class="row">
     <div class="col-md-10 col-12 mx-auto">
         <div class="card shadow mb-4">
-            <div class="card-header py-3">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold  f-thai">ประเภทงานทั้งหมด</h6>
+                <button class="btn btn-light f-thai" data-toggle="modal" data-target="#ModalInsert"><i class="far fa-plus-square"></i> เพิ่มประเภทงาน</button>
+
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -119,11 +121,13 @@
                     </button>
                 </div>
                 <div class="modal-body p-5">
-                    <form class="user">
+                    <form class="user" method="POST" action="{{route('admin.jobtype.update')}}">
+                        @csrf
+                        @method('PUT')
                         <div class="form-group row">
                             <div class="col-sm-8 mb-3 mb-sm-0">
-                                <input type="hidden" name="ed-id" value="">
-                                <input type="text" class="form-control form-control-user" name='ed-jobtype' id="exampleFirstName" placeholder="ประเภทงาน" required>
+                                <input type="hidden" name="ed_id" value="">
+                                <input type="text" class="form-control form-control-user" name='ed_jobtype' id="exampleFirstName" placeholder="ประเภทงาน" required>
                             </div>
                             <div class="col-sm-4">
                                 <button type="submit" class="btn btn-primary btn-user btn-block" id="btn-edit">
@@ -147,8 +151,8 @@
 <script>
     function edit(id, name) {
         console.log(id, name)
-        $("input[name='ed-jobtype']").val(name)
-        $("input[name='ed-id']").val(id)
+        $("input[name='ed_jobtype']").val(name)
+        $("input[name='ed_id']").val(id)
         $("#ModalUpdate").modal('show')
     }
 
@@ -180,47 +184,19 @@
     }
     $("body").on('click', "#btn-save", function(e) {
         e.preventDefault();
-        let html = "";
-        $.ajax({
-            type: 'POST',
-            url: `{{route('admin.jobtype.store')}}`,
-            data: $("#insert-form").serialize(),
-            success: function(response) {
-                console.log(response.status);
-                if (response.status) {
-                    $("#ModalInsert").modal('hide')
-                    setTimeout(()=>{
-                        location.reload()
-                    },1000)
-                }
-            }
-        });
+
+        $("#ModalInsert").modal('hide')
+        setTimeout(() => {
+            $(this).closest('form').submit();
+        }, 500)
     });
     $("body").on('click', "#btn-edit", function(e) {
         e.preventDefault();
-        let name = $("input[name='ed-jobtype']").val();
-        let id = $("input[name='ed-id']").val();
-        let job = {
-            name,
-            id
-        };
-        let row = $(`tr#${id}`).find("td#name");
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            type: 'PUT',
-            url: `jobtype/update`,
-            data: job,
-            success: function(response) {
-                console.log(response);
-                if (response.status) {
-                    row.text(response.text)
-                    $("#ModalUpdate").modal('hide')
-                }
-
-            }
-        });
+        $("#ModalUpdate").modal('hide')
+        setTimeout(() => {
+            $(this).closest('form').submit();
+        }, 500)
+        
     })
     $(document).ready(function() {
         $('#dataTable').DataTable();

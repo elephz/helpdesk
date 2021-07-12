@@ -51,6 +51,14 @@
     </li>
     <hr class="sidebar-divider">
 
+    
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('admin.equipment')}}">
+        <i class="fas fa-box-open"></i>
+        <span><b>อุปกรณ์</b></span></a>
+    </li>
+    <hr class="sidebar-divider">
+
 
     <li class="nav-item">
         <a class="nav-link" href="{{route('admin.jobtype')}}">

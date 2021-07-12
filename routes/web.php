@@ -43,6 +43,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::delete('/delete/{id?}', 'JobsTypeController@delete')->name('admin.jobtype.delete');
         });
 
+        Route::group(['prefix' => 'equipment'], function () {
+            Route::get('/', 'EquipmentController@index')->name('admin.equipment');
+            Route::post('/', 'EquipmentController@store')->name('admin.equipment.store');
+            Route::put('/update', 'EquipmentController@update')->name('admin.equipment.update');
+            Route::delete('/delete/{id?}', 'EquipmentController@delete')->name('admin.equipment.delete');
+        });
+
         Route::group(['prefix' => 'jobs'], function () {
             Route::get('/', 'JobsController@index')->name('admin.jobs');
             Route::get('/detail/{id}', 'JobsController@detail')->name('admin.jobs.detail');
@@ -54,6 +61,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
             Route::put('/banned', 'UserController@Banned')->name('admin.putBanned');
             Route::get('/profile/{id}', 'UserController@profile')->name('admin.profile');
         });
+
         Route::group(['prefix' => 'tech'], function () {
             Route::get('/', 'UserController@allTech')->name('admin.allTech');
             Route::get('/newTech', 'UserController@newTech')->name('admin.newtech');

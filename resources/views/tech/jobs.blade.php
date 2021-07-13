@@ -5,16 +5,19 @@
 @section('head')
 <link href="{{ asset('css/modalSix.css') }}" rel="stylesheet">
 <link href="{{ asset('css/loader.css') }}" rel="stylesheet">
+<link href="{{ asset('plugin/touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet">
 
 <style>
     #btn {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 10px;
+
     }
 
     .modal-body {
         position: relative;
+        min-height: 600px;
     }
 
     .top-right {
@@ -22,6 +25,72 @@
         top: 0px;
         right: 0px;
         font-size: 12px;
+    }
+
+    .box-img {
+        height: 100px;
+        width: 100px;
+        cursor: pointer;
+    }
+
+    .modal-body .table td,
+    .table th {
+        vertical-align: middle;
+    }
+
+    .box-img img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    #modal-container .modal-background .modal .modal-body {
+        padding: 25px;
+    }
+
+    .list-item {
+        overflow: auto;
+        height: 500px !important;
+    }
+
+    .list-item ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+
+    }
+
+    .list-item ul li {
+        display: grid;
+        grid-template-columns: 100px 4fr 0.5fr;
+        grid-column-gap: 10px;
+        align-items: center;
+    }
+
+    .list-item ul li .content .name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #444;
+    }
+
+    .list-item ul li a {
+        transition: 0.3s;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .list-item ul li a:hover {
+        transform: scale(1.2);
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    .bootstrap-touchspin {
+        width: 50% !important;
+        text-align: center;
     }
 </style>
 @endsection
@@ -37,7 +106,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-5">
                         <div class="shadow-sm rounded p-4">
                             <div class="row">
                                 <div class="table-responsive">
@@ -45,26 +114,84 @@
                                         <thead class="bg-light text-dark">
                                             <tr>
                                                 <th>#</th>
+                                                <th>รูปภาพ</th>
                                                 <th>ชื่อ</th>
-                                                <th>จำนวนงาน</th>
-                                                <th>มอบหมายงาน</th>
+                                                <th>คงเหลือ</th>
+                                                <th>ราคา</th>
+                                                <th>เลือก</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            @foreach($hw as $key => $item)
+                                            <tr>
+                                                <td>{{$key+1}}</td>
+                                                <td align="center">
+                                                    <div class="box-img">
+                                                        <img src="{{$item->getCover()}}" class="w-100 shadow-sm rounded">
+                                                    </div>
+                                                </td>
+                                                <td>{{$item->name}}</td>
+                                                <td align="right">{{$item->amount}}</td>
+                                                <td align="right">{{number_format($item->price,2)}}</td>
+                                                <td>
+                                                    <button class="btn btn-success" onclick="obj.addItem({{$item}},'{{$item->getCover()}}')">
+                                                        <i class="far fa-arrow-alt-circle-right"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
-                        <form action="/action_page.php" class="w-100 text-left">
-                            <div class="form-group">
-                                <label for="email">รายละเอียด</label>
-                                <textarea name="detail" id="email" cols="30" rows="5" class="form-control"></textarea>
+                    <div class="col-7">
+                        <form action="/action_page.php" class="f-thai w-100 text-left d-flex flex-column justify-content-between h-100">
+                            <div class="form-group d-flex justify-content-between">
+                                <div class="w-100">
+                                    <p class="text-dark">รายละเอียด</p>
+                                    <textarea name="detail" id="email" cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                                <div class="text-left w-100  ml-3">
+                                    <p class="text-dark">รวมค่าใช้จ่าย</p>
+                                    <ul class="list-group border-0"> 
+                                        <li class="list-group-item d-flex justify-content-between  border-0">
+                                            <span>ค่าแรง</span>
+                                            <span>5000</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between  border-0">
+                                            <span>ค่าอุปกรณ์</span>
+                                            <span id='hard-ward'>0</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between  border-0">
+                                            <span>รวมทั้งสิ้น</span>
+                                            <span id="total">...</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            <div class="list-item h-100 border p-3">
+                                <p class="text-dark">รายละเอียดการใช้อุปกรณ์</p>
+                                <ul class="list-group">
+                                    <li class="list-group-item p-3 shadow-sm rounded">
+                                        <img src="{{asset('web_images/available.png')}}" alt="" class="w-100">
+                                        <div class="content">
+                                            <p class="name"> Lorem ipsum dolor sit amet. </p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <input id="demo3" type="text" value="" class="touchspin w-25">
+                                                <span id='total'>
+                                                    <h4> <b> 1,000 </b> </h4>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <a class="text-danger p-3">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -189,16 +316,111 @@
 @endsection
 
 @section('script')
+<script src="{{asset('plugin/touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
+<script src="{{asset('plugin/touchspin/custom-bootstrap-touchspin.js')}}"></script>
 <script>
     $(function() {
         $('button').tooltip();
+        $(".touchspin").TouchSpin({
+            initval: 1,
+            buttondown_class: "btn btn-classic btn-primary",
+            buttonup_class: "btn btn-classic btn-primary"
+        });
+
+        $('#dataTable2').DataTable({
+            "pageLength": 4,
+            "lengthChange": false,
+            "dom": "<'row'<'col-md-12 text-left'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-12'p>>",
+        });
 
         $("#modal-container .modal-background .modal .modal-header i").click(() => {
             console.log("hey");
             $(".two").addClass('out');
             $('body').removeClass('modal-active');
         })
+
     });
+    var obj = {
+        wage: 0,
+        hardward: 0,
+        arr: [],
+        addItem: function(obj, img) {
+            console.log();
+            let incard = false;
+
+            for (let i = 0; i < this.arr.length; i++) {
+                if (this.arr[i].id == obj.id) {
+                    incard = true;
+                    this.arr[i].amount++;
+                    break;
+                }
+            }
+
+            if (!incard) {
+                this.arr.push({
+                    'id': obj.id,
+                    'name': obj.name,
+                    'img': img,
+                    'amount': 1,
+                    'price': obj.price,
+                })
+            }
+           
+            this.calculate();
+            console.log(this.hardward);
+            this.write();
+        },
+        write: function() {
+            let text = "";
+            console.log(this.arr);
+            this.arr.forEach((item) => {
+                text +=
+                    `
+                <li class="list-group-item p-3 shadow-sm rounded">
+                    <img src="${item.img}" alt="" class="w-100">
+                    <div class="content">
+                        <p class="name">${item.name}</p>
+                        <div class="d-flex justify-content-between align-items-center" data="${item.id}">
+                            <input type="text" value="${item.amount}" class="w-25">
+                            <span id='total'> <h4> <b> ${item.amount * item.price} </b> </h4></span>
+                        </div>
+                    </div>
+                    <a class="text-danger p-3" >
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            `;
+            })
+            $(".input-group-prepen").click(()=>{
+                console.log("clicked");
+            })
+
+            $(".list-item ul").empty().html(text);
+            $(".touchspin").TouchSpin({
+                initval: 1,
+                buttondown_class: "btn btn-classic btn-primary",
+                buttonup_class: "btn btn-classic btn-primary"
+            });
+        },
+        calculate: function() {
+            let count = 0;
+            for (let i = 0; i < this.arr.length; i++) {
+                count += this.arr[i].price * this.arr[i].amount
+            }
+            this.hardward = count
+            $("ul.list-group li #hard-ward").text(this.hardward)
+            $("ul.list-group li #total").text(this.hardward + this.wage)
+
+        }
+
+    }
+
+
+    function addItem(obj, img) {
+
+    }
 
     function successReport(id) {
         $.ajax({

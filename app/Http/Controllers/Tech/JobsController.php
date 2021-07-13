@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tech;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\JobCase;
+use App\Equipment;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +15,10 @@ class JobsController extends Controller
     {
         $Userid = Auth::id();
         $job = JobCase::where('techId', $Userid)->orderBy('updated_at','desc')->get();
+
         return view('tech.jobs')->with([
             'jobs' => $job,
+            'hw' => Equipment::all()
             ]);
     }
 

@@ -83,7 +83,7 @@ Route::group(['middleware' => 'Tech'], function () {
         Route::get('/', 'TechController@index')->name('tech.dashboard');
         Route::get('/Jobs', 'JobsController@index')->name('tech.Jobs');
         Route::put('/Jobs/{id}', 'JobsController@accept')->name('tech.Jobs.accept');
-        Route::put('/Jobs/success/{id}', 'JobsController@success')->name('tech.Jobs.success');
+        Route::post('/Jobs/success', 'JobsController@success')->name('tech.Jobs.success');
      
         Route::put('/Jobs/cancel/msg','JobsController@cancel')->name('tech.Jobs.cancel');
         Route::get('/Jobs/getCancelMsg/detail/{id}','JobsController@getCancelMsg')->name('tech.Jobs.getCancelMsg');

@@ -15,6 +15,13 @@
 
     }
 
+    .amount-price {
+        display: grid;
+        grid-template-columns: 1fr 70px;
+        grid-gap: 10px;
+        align-items: center;
+    }
+
     .modal-body {
         position: relative;
         min-height: 600px;
@@ -62,9 +69,10 @@
 
     .list-item ul li {
         display: grid;
-        grid-template-columns: 100px 4fr 0.5fr;
+        grid-template-columns: 100px 1fr;
         grid-column-gap: 10px;
         align-items: center;
+        position: relative;
     }
 
     .list-item ul li .content .name {
@@ -78,6 +86,13 @@
         transition: 0.3s;
         font-size: 24px;
         cursor: pointer;
+        position: absolute;
+        top: -17px;
+        right: -14px;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 5px;
     }
 
     .list-item ul li a:hover {
@@ -91,6 +106,39 @@
     .bootstrap-touchspin {
         width: 50% !important;
         text-align: center;
+    }
+
+    #touch i {
+        color: #fff;
+        background-color: #2c3e50;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    #touch i:hover {
+        color: #2c3e50;
+        background-color: #fff;
+        transform: scale(1.3);
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    input[type=number]:focus {
+        outline: none !important;
+    }
+
+    input[type=number] {
+        font-size: 18px;
+        font-weight: bold;
     }
 </style>
 @endsection
@@ -147,7 +195,9 @@
                         </div>
                     </div>
                     <div class="col-7">
-                        <form action="/action_page.php" class="f-thai w-100 text-left d-flex flex-column justify-content-between h-100">
+                        <form action="{{route('tech.Jobs.success')}}" method="POSt" class="f-thai w-100 text-left d-flex flex-column justify-content-between h-100">
+                            @csrf
+                            <input type="hidden" name='job_id'>
                             <div class="form-group d-flex justify-content-between">
                                 <div class="w-100">
                                     <p class="text-dark">รายละเอียด</p>
@@ -155,10 +205,10 @@
                                 </div>
                                 <div class="text-left w-100  ml-3">
                                     <p class="text-dark">รวมค่าใช้จ่าย</p>
-                                    <ul class="list-group border-0"> 
+                                    <ul class="list-group border-0">
                                         <li class="list-group-item d-flex justify-content-between  border-0">
                                             <span>ค่าแรง</span>
-                                            <span>5000</span>
+                                            <span id='wage'>0</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between  border-0">
                                             <span>ค่าอุปกรณ์</span>
@@ -166,7 +216,7 @@
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between  border-0">
                                             <span>รวมทั้งสิ้น</span>
-                                            <span id="total">...</span>
+                                            <span id="total">0</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -174,24 +224,10 @@
                             <div class="list-item h-100 border p-3">
                                 <p class="text-dark">รายละเอียดการใช้อุปกรณ์</p>
                                 <ul class="list-group">
-                                    <li class="list-group-item p-3 shadow-sm rounded">
-                                        <img src="{{asset('web_images/available.png')}}" alt="" class="w-100">
-                                        <div class="content">
-                                            <p class="name"> Lorem ipsum dolor sit amet. </p>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <input id="demo3" type="text" value="" class="touchspin w-25">
-                                                <span id='total'>
-                                                    <h4> <b> 1,000 </b> </h4>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <a class="text-danger p-3">
-                                            <i class="fas fa-times"></i>
-                                        </a>
-                                    </li>
+                                    
                                 </ul>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>
+                            <button id="btn-save" class="btn btn-primary btn-block mt-2">บันทึก</button>
                         </form>
                     </div>
                 </div>
@@ -215,6 +251,18 @@
                 <h6 class="m-0 font-weight-bold text-primary f-thai">งานที่ได้รับมอบหมาย</h6>
             </div>
             <div class="card-body">
+                @if(Session::has('message'))
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert {{Session::has('alert-class')?Session::get('alert-class'):'alert-success'}} alert-dismissible fade show" role="alert">
+                            {{Session::get('message')}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @endif
                 <div class="table-responsive">
                     <table class="table table-bordered f-thai" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -257,7 +305,7 @@
                                     @break
 
                                     @case(2)
-                                    <button class="btn btn-success" title="ดำเนินการเสร็จสิ้น" onclick="successJob('{{$value->id}}')">
+                                    <button class="btn btn-success" title="ดำเนินการเสร็จสิ้น" onclick="successJob({{$value}})">
                                         <i class="far fa-check-square"></i>
                                     </button>
 
@@ -321,11 +369,14 @@
 <script>
     $(function() {
         $('button').tooltip();
-        $(".touchspin").TouchSpin({
-            initval: 1,
-            buttondown_class: "btn btn-classic btn-primary",
-            buttonup_class: "btn btn-classic btn-primary"
-        });
+        $("#btn-save").click(function() {
+            $(".two").addClass('out');
+            $('body').removeClass('modal-active');
+            const form = $(this).closest('form')
+            setTimeout(() => {
+                form.submit()
+            }, 1000)
+        })
 
         $('#dataTable2').DataTable({
             "pageLength": 4,
@@ -339,6 +390,7 @@
             console.log("hey");
             $(".two").addClass('out');
             $('body').removeClass('modal-active');
+
         })
 
     });
@@ -365,16 +417,55 @@
                     'img': img,
                     'amount': 1,
                     'price': obj.price,
+                    'total':obj.amount
                 })
             }
-           
-            this.calculate();
-            console.log(this.hardward);
+
+            this.write();
+        },
+        minus: function(id) {
+            for (let i = 0; i < this.arr.length; i++) {
+                if (this.arr[i].id == id) {
+
+                    this.arr[i].amount--;
+
+                    if (this.arr[i].amount <= 0) {
+                        this.arr.splice(i, 1)
+                        return;
+                    }
+
+                    break;
+                }
+            }
+            this.write()
+        },
+        plush: function(id) {
+            console.log("plush id = " + id);
+            for (let i = 0; i < this.arr.length; i++) {
+                if (this.arr[i].id == id) {
+                    if(this.arr[i].amount >= this.arr[i].total){
+                        return
+                    }
+                    this.arr[i].amount++;
+                    console.log("here", this.arr[i]);
+                    break;
+                }
+            }
+            this.write();
+        },
+        delete: function(id) {
+            for (let i = 0; i < this.arr.length; i++) {
+                if (this.arr[i].id == id) {
+                    this.arr.splice(i, 1)
+                    break;
+                }
+            }
+
             this.write();
         },
         write: function() {
             let text = "";
-            console.log(this.arr);
+          
             this.arr.forEach((item) => {
                 text +=
                     `
@@ -382,27 +473,26 @@
                     <img src="${item.img}" alt="" class="w-100">
                     <div class="content">
                         <p class="name">${item.name}</p>
-                        <div class="d-flex justify-content-between align-items-center" data="${item.id}">
-                            <input type="text" value="${item.amount}" class="w-25">
-                            <span id='total'> <h4> <b> ${item.amount * item.price} </b> </h4></span>
+                        <div class="amount-price" data="${item.id}">
+                            <div class="d-flex justify-content-between align-items-center mr-3 text-center" id='touch'>
+                                <i class="fas fa-minus shadow-sm p-2 rounded-circle" onclick="obj.minus('${item.id}')"></i>
+                                    <input type="hidden" name="product[]" value="${item.id}" >
+                                    <input type="number" name="amount[]" value="${item.amount}" class="form-control rounded border-0 w-50 text-dark">
+                                <i class="fas fa-plus shadow-sm p-2 rounded-circle" onclick="obj.plush('${item.id}')"></i>
+                            </div>
+                            <span id='total'> <h5> <b> ${item.amount * item.price} </b> </h5></span>
                         </div>
                     </div>
-                    <a class="text-danger p-3" >
-                        <i class="fas fa-times"></i>
+                    <a class="text-danger p-2 shadow-sm rounded-circle bg-white" >
+                        <i class="fas fa-times" onclick="obj.delete('${item.id}')"></i>
                     </a>
                 </li>
             `;
             })
-            $(".input-group-prepen").click(()=>{
-                console.log("clicked");
-            })
+            this.calculate();
 
             $(".list-item ul").empty().html(text);
-            $(".touchspin").TouchSpin({
-                initval: 1,
-                buttondown_class: "btn btn-classic btn-primary",
-                buttonup_class: "btn btn-classic btn-primary"
-            });
+
         },
         calculate: function() {
             let count = 0;
@@ -410,6 +500,7 @@
                 count += this.arr[i].price * this.arr[i].amount
             }
             this.hardward = count
+            $("ul.list-group li #wage").text(this.wage)
             $("ul.list-group li #hard-ward").text(this.hardward)
             $("ul.list-group li #total").text(this.hardward + this.wage)
 
@@ -417,10 +508,6 @@
 
     }
 
-
-    function addItem(obj, img) {
-
-    }
 
     function successReport(id) {
         $.ajax({
@@ -517,38 +604,41 @@
 
     }
 
-    function successJob(id) {
+    function successJob(val) {
 
         $('#modal-container').removeAttr('class').addClass("two");
         $('body').addClass('modal-active');
+        $("ul.list-group li #wage").text(val.wage)
+        this.obj.wage = val.wage
+        $("form").find("input[name='job_id']").val(val.id)
         return
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-            },
-            type: 'PUT',
-            url: `Jobs/success/${id}`,
-            cache: false,
-            success: function(response) {
-                console.log(response);
-                if (response.status) {
-                    Cttoas('success', 'บันทึกสำเร็จ')
-                    setTimeout(() => {
-                        location.reload();
-                    }, 500)
-                } else {
-                    if (response.type == 'activedted') {
-                        Cttoas('error', 'เกิดข้อผิดพลาดกรุณาลองใหม่อีกครั้ง')
-                    } else {
-                        console.log('error');
-                    }
-                }
+        // $.ajax({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        //     },
+        //     type: 'PUT',
+        //     url: `Jobs/success/${id}`,
+        //     cache: false,
+        //     success: function(response) {
+        //         console.log(response);
+        //         if (response.status) {
+        //             Cttoas('success', 'บันทึกสำเร็จ')
+        //             setTimeout(() => {
+        //                 location.reload();
+        //             }, 500)
+        //         } else {
+        //             if (response.type == 'activedted') {
+        //                 Cttoas('error', 'เกิดข้อผิดพลาดกรุณาลองใหม่อีกครั้ง')
+        //             } else {
+        //                 console.log('error');
+        //             }
+        //         }
 
-            },
-            error: function(e) {
-                console.log(e)
-            }
-        });
+        //     },
+        //     error: function(e) {
+        //         console.log(e)
+        //     }
+        // });
     }
 
     function acceptJob(id) {

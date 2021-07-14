@@ -30,7 +30,7 @@ class JobCaseController extends Controller
             $job->address =  $request->address;
             $job->save();
             DB::commit();
-            LineNotify::sendMessage($access_token, $job->getUser->name."ได้เพิ่มงานแจ้งซ่อมประเภท".$job->JobType->name);
+            LineNotify::sendMessage($access_token, $job->getUser->name." ได้เพิ่มงานแจ้งซ่อมประเภท".$job->JobType->name);
             return response()->json(["status" => true,]);
         } catch (\Exception $e) {
             DB::rollBack();

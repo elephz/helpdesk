@@ -127,7 +127,7 @@
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between align-items-center">
                 <h6 class="m-0 font-weight-bold  f-thai">อุปกรณ์ทั้งหมด</h6>
-                <button class="btn btn-light f-thai" data-toggle="modal" data-target="#ModalInsert"><i class="far fa-plus-square"></i> เพิ่มอุปรกรณ์</button>
+                <button class="btn btn-light f-thai" data-toggle="modal" data-target="#ModalInsert"><i class="far fa-plus-square"></i> เพิ่มอุปกรณ์</button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

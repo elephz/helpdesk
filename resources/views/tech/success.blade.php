@@ -99,7 +99,7 @@
                                     <i class="fas fa-cog fa-2x text-gray-300"></i>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row f-thai">
                                 {{$job->note ?? "-"}}
                             </div>
                         </div>

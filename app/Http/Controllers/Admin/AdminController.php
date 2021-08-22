@@ -8,7 +8,7 @@ use App\User;
 use App\JobCase;
 use Carbon\Carbon;
 use DB;
-
+use App\Using_Eq;
 class AdminController extends Controller
 {
     public function index()
@@ -54,9 +54,21 @@ class AdminController extends Controller
             array_push($graph_label, $M_to_string[$value->month] . " " . $value->year);
             array_push($graph_data, $value->data);
         }
-        $user_trophy = JobCase::groupBy('userId')->select('userId', DB::raw('count(*) as total')) ->orderBy('total', 'desc') ->first();
-        $tech_trophy = JobCase::groupBy('techId')->select('techId', DB::raw('count(*) as total')) ->orderBy('total', 'desc') ->first();
        
+       
+      
+
+        $salary = JobCase::all()->sum('to_tal');
+        $today_salary = 0;
+        $qr = JobCase::whereDate('updated_at',Carbon::today())
+            ->where('jobStatus',3)
+            ->get();
+
+        foreach($qr as $item){
+            $today_salary += $item->to_tal;
+        }
+      
+
         return view('admin.dashboard')->with([
             "user" => $user->count(),
             "tech" => $tech->count(),
@@ -68,8 +80,8 @@ class AdminController extends Controller
             "jobStatuslabel" => $jobStatuslabel,
             "label" => $graph_label,
             "data" => $graph_data,
-            "user_trophy" => $user_trophy,
-            "tech_trophy" => $tech_trophy
+            "salary" => $salary,
+            "today_salary" => $today_salary
         ]);
     }
 

@@ -8,11 +8,10 @@
         background-color: #fff;
     }
 
-  
-    .gold{
+
+    .gold {
         color: #FFD700;
     }
-    
 </style>
 @endsection
 
@@ -44,11 +43,11 @@
                     <div class="row no-gutters align-items-center mt-3">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1 f-thai">
-                            {{$user_trophy->getUser->name}} </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$user_trophy->total}} งาน</div>
+                                ช่างเทคนิค </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$tech}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-trophy fa-2x gold "></i>
+                            <i class="fas fa-user-cog fa-2x text-primary"></i>
                         </div>
                     </div>
                 </div>
@@ -62,21 +61,17 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1 f-thai">
-                                ช่างเทคนิค</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$tech}}</div>
+                                รายได้ทั้งหมด</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{number_format($salary,2)}}</div>
+
+                            <div class="text-xs font-weight-bold text-dark  mb-1 f-thai mt-2">
+                                รายได้วันนี้ </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{number_format($today_salary,2)}}</div>
                         </div>
+
+
                         <div class="col-auto">
-                            <i class="fas fa-user-cog fa-2x text-primary"></i>
-                        </div>
-                    </div>
-                    <div class="row no-gutters align-items-center mt-3">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-dark  mb-1 f-thai">
-                            {{$tech_trophy->getTech->name}} </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$tech_trophy->total}} งาน</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-trophy fa-2x gold "></i>
+                            <i class="fas fa-dollar-sign fa-2x gold"></i>
                         </div>
                     </div>
                 </div>
@@ -89,7 +84,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center ">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1 f-thai">งานใหม่ๆๆๆๆ
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1 f-thai">งานใหม่
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
@@ -123,18 +118,20 @@
                     <div class="row no-gutters align-items-center ">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-dark  mb-1 f-thai">
-                            {{max($label)}}  </div>
+                                {{max($label)}}
+                            </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{max($data)}} <small>งาน</small> </div>
 
                             <div class="text-xs font-weight-bold text-dark py-2 mt-2 f-thai">
-                            {{min($label)}}  </div>
+                                {{min($label)}}
+                            </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"> {{min($data)}} <small>งาน</small></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-trophy fa-2x shadow-sm gold rounded-circle bg-white p-3"></i>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

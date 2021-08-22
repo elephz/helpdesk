@@ -12,6 +12,8 @@ class JobCase extends Model
         return $this->hasOne(CaseType::class, 'id', 'caseTypeId');
     }
 
+  
+
     public function calculate($value, $max)
     {
         return  number_format(($value * 100) / $max, 2);
@@ -66,12 +68,24 @@ class JobCase extends Model
 
     public function getImg()
     {
-        if ($this->img == null) {
+        $website = str_contains($this->image, 'https') ? true : false ;
+        if ($this->image == null && !$website) {
             return asset('web_images/available.png');
         }
-        if (str_contains($this->img, 'https')) {
-            return $this->img;
+        if ($website) {
+            return $this->image;
         }
+
         return asset('images/' . $this->image);
+    }
+
+    public function hardward()
+    {
+        return $this->hasMany(Using_Eq::class,'job_case_id','id');
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->wage + $this->hardward->sum('to_tal');
     }
 }

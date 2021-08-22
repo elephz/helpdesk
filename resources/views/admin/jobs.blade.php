@@ -190,12 +190,17 @@
                                 <span class='title'>รายละเอียด</span>
                                 <span class='detial' id='detail'></span>
                             </li>
+                            <li class="list-group-item d-flex flex-row  align-items-start border-0 pb-4">
+                                <span class='title text-left w-100'>ค่าแรง</span>
+                                <input type="number" name="amount" class="form-control text-right" value="0">
+                            </li>
                             <li class="list-group-item d-flex flex-column  align-items-start border-0">
                                 <span class='badge badge-pill badge-primary px-3 py-2'>ช่างเทคนิค</span>
                                 <span class='detial' id='tname'>
                                     <i class="fas fa-question"></i>
                                 </span>
                             </li>
+                            
                             <input type="hidden" name='job_id'>
                             <input type="hidden" name='t_id'>
                             <li class="list-group-item d-flex flex-column  align-items-start border-0">
@@ -215,9 +220,6 @@
                     </div>
                 </div>
             </div>
-
-
-
 
         </div>
     </div>
@@ -340,8 +342,9 @@
     function save() {
         const techid = $(".jobinfo input[name='t_id']").val()
         const jobsid = $(".jobinfo input[name='job_id']").val()
+        const amount = $(".jobinfo input[name='amount']").val()
 
-        if (!techid || !jobsid) {
+        if (!techid || !jobsid ) {
             $("span.al-msg").css('opacity', '1')
             setTimeout(() => {
                 $("span.al-msg").css('opacity', '0')
@@ -352,7 +355,8 @@
         $(".loader").css('opacity', 1)
         let data = {
             techid,
-            jobsid
+            jobsid,
+            amount
         }
         $.ajax({
             headers: {

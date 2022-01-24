@@ -64,8 +64,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 
         Route::group(['prefix' => 'tech'], function () {
             Route::get('/', 'UserController@allTech')->name('admin.allTech');
-            Route::get('/newTech', 'UserController@newTech')->name('admin.newtech');
-            Route::put('/newTech/accept', 'UserController@acceptTech')->name('admin.tech.accept');
+            Route::get('/jobs/{id}', 'UserController@TechDetail')->name('admin.tech.Detail');
+            Route::get('/newtech', 'UserController@newTech')->name('admin.newtech');
+            Route::put('/newtech/accept', 'UserController@acceptTech')->name('admin.tech.accept');
         });
     });
 });

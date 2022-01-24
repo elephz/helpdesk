@@ -41,7 +41,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">HELP DESK</a>
+            <a class="navbar-brand js-scroll-trigger" href="#page-top"><i class="fas fa-cog"></i></a>
             <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
@@ -49,7 +49,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger f-thai" href="#portfolio">แจ้งซ่อม</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger f-thai" href="#about">Dashborad</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger f-thai" href="#about">ประวัติการแจ้งซ่อม</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger f-thai" href="#contact">ข้อมูลส่วนตัว</a></li>
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger f-thai" id="confirmBox" href="">
@@ -69,7 +69,7 @@
             <!-- Masthead Avatar Image-->
             <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="" />
             <!-- Masthead Heading-->
-            <h1 class="masthead-heading text-uppercase mb-0">Welcome Back</h1>
+            <h1 class="masthead-heading text-uppercase mb-0 f-thai">ยินดีต้อนรับ</h1>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -146,7 +146,7 @@
     <section class="page-section bg-primary text-white mb-0 pt-5" id="about">
         <div class="container">
             <!-- About Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-white f-thai">Dashborad</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-white f-thai">ประวัติการแจ้งซ่อม</h2>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -185,7 +185,6 @@
                 </div>
                 <div class="col-md-7 col-12">
                     <div class="shadow rounded p-3 bg-white">
-                        <h4 class="f-thai text-primary">ประวัติการแจ้งซ่อม</h4>
                         <div class="table-responsive">
                             <table class="table table-bordered f-thai" id="dataTable" width="100%" cellspacing="0">
                                 <thead>

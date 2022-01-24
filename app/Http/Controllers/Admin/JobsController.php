@@ -14,7 +14,7 @@ class JobsController extends Controller
     public function index()
     {
         $job = JobCase::orderBy('id','desc')->get();
-        $tech = User::where('roleid','2')->where('acceptTeach','2')->get();
+        $tech = User::where('roleid','2')->where('acceptTeach','2')->orderBy('created_at','desc')->get();
         return view('admin.jobs')->with(['jobs' => $job,'tech' => $tech]);
     }
 

@@ -1,6 +1,6 @@
 @extends('templates.admin')
 
-@section('title','Dashboard')
+@section('title','ประเภทงานทั้งหมด')
 
 @section('head')
 <style>

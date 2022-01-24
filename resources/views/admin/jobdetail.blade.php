@@ -10,7 +10,7 @@
         object-fit: cover;
     }
 
-    li {
+    ul.list-unstyled li {
         table-layout: fixed;
         padding: 10px 5px;
         display: table;
@@ -19,7 +19,7 @@
         font-weight: bold;
     }
 
-    li .info-list-title {
+    ul.list-unstyled li .info-list-title {
         min-width: 108px;
         display: table-cell;
         color: #ff5938;
@@ -27,7 +27,7 @@
     table > thead > tr > th{
         text-align: center;
     }
-    li .info-list-text {
+    ul.list-unstyled li .info-list-text {
         color: #888ea8;
     }
 </style>
@@ -93,7 +93,7 @@
                     <td>{{$jobs->formattedDate($jobs->created_at)}}</td>
                     <td>{{$jobs->formattedDate($jobs->acceptTime) ?? "-"}}</td>
                     <td>{{$jobs->getTech->name ?? "-"}}</td>
-                
+                    <td>{{$jobs->formattedDate($jobs->successTime)}}</td>
                 </tr>
             </tbody>
         </table>

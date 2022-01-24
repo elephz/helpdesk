@@ -1,6 +1,6 @@
 @extends('templates.admin')
 
-@section('title','Dashboard')
+@section('title','จัดการงานแจ้งปัญหา')
 
 @section('head')
 <link rel="stylesheet" href="{{asset('plugin/select2/select2.min.css')}}">
@@ -57,7 +57,7 @@
         border: none;
     }
 
-    .dataTables_filter label {
+    .dataTables_filter label ,.select2-content label {
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -134,6 +134,12 @@
         background: #2c3e50;
         color: #fff !important;
     }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered , .select2-results__option {
+        font-family: 'Kanit', sans-serif !important;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
 </style>
 @endsection
 @section('modal')
@@ -163,7 +169,7 @@
                                         <tbody>
                                             @foreach($tech as $key => $item)
                                             <tr>
-                                                <td align="center" id="index">{{$key+1}}</td>
+                                                <td align="center" id="index">{{$item->JobId}}</td>
                                                 <td class="text-left">{{$item->getFullname()}}</td>
                                                 <td>{{count($item->getTechCount)}}</td>
                                                 <td>
@@ -267,7 +273,7 @@
                         <tbody>
                             @foreach($jobs as $key => $value)
                             <tr id="{{$value->id}}">
-                                <td align="center" id="index">{{$key+1}}</td>
+                                <td align="center" id="index">{{$value->JobId}}</td>
                                 <td>{{$value->JobType->name}}</td>
                                 <td>{{$value->formattedDate_time()[0]}} <br> <span style="font-size: 12px;">{{$value->formattedDate_time()[1]}}</span></td>
                                 <td>{{$value->getUser->name}}</td>
@@ -283,12 +289,12 @@
                                     @elseif($value->jobStatus == 2)
                                     <button class="btn btn-success btn-block button-test btn-grid" onclick="customModal({{$value}},'{{$value->JobStatus()}}',{{$value->getTech}})">
                                         <i class="fas fa-user-edit"></i>
-                                        <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span>
+                                        <span class="text-left w-100"> {{$value->getTech->getFullname() ?? ""}} </span>
                                     </button>
                                     @else
                                     <button class="btn btn-success  btn-block button-test btn-grid">
                                         <i class="fas fa-check"></i>
-                                        <span class="text-left w-100"> {{$value->getTech->name ?? ""}} </span>
+                                        <span class="text-left w-100"> {{$value->getTech->getFullname() ?? ""}} </span>
                                     </button>
                                     @endif
                                 </td>
@@ -312,13 +318,15 @@
 @section('script')
 
 
+<script src="{{asset('plugin/select2/select2.min.js')}}"></script>
 
 <script>
     function selectT(name, id) {
         $(".jobinfo #tname").text(name)
         $(".jobinfo input[name='t_id']").val(id)
     }
-
+    const tech = @json($tech);
+    console.log(tech);
     function customModal(obj, status, tech = null) {
         if (tech) {
             $(".jobinfo #tname").text(tech.name + " " + tech.lastname)
@@ -379,9 +387,10 @@
 
         $('#dataTable').DataTable({
             "dom": "<'row'<'col-md-6'l><'col-md-6'f>>" +
-                "<'row'<'col-12 ct-fillter d-flex py-2'>>" +
+                "<'row'<'col-9 ct-fillter d-flex py-2'> <'col-3  select2-content'> >" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-12'p>>",
+            "order": []
 
         });
         let text = `<div id="horz-list" class='pt-2 pl-3'>
@@ -394,12 +403,38 @@
             </ul>
         </div>`
         $(".ct-fillter").html(text);
+        let allTech = "";
+        tech.forEach(element => {
+            allTech +=`<option value="${element.name+" "+element.lastname} " class='f-thai' >${element.name} ${element.lastname}</option>`;
+        });
+        const select2 = ` <label>
+                                <div class='w-50 text-right mr-2 mb-4 f-thai'>ช่างเทคนิค : </div>
+                                <select class="form-control basic f-thai">
+                                    <option value="" class='f-thai' >ทั้งหมด</option>
+                                    ${allTech}
+                                </select>
+                            </label>`;
+        $(".select2-content").html(select2)
+
+        $(".basic").select2({
+            tags: true
+        });
+
+        $("select.basic").change(function(){
+            const val = $(this).val();
+            var table = $('#dataTable').DataTable();
+            table.columns([5])
+                .search(val)
+                .draw();
+        })
+
         $('#dataTable2').DataTable({
             "pageLength": 6,
             "lengthChange": false,
             "dom": "<'row'<'col-md-6'f><'col-md-6'>>" +
                 "<'row'<'col-sm-12'tr>>" +
                 "<'row'<'col-12'p>>",
+            
         });
         $("body").on('change', '.basic', function() {
             let tech_id = $(this).val()
@@ -425,5 +460,7 @@
             .search(val)
             .draw();
     }
+
+    
 </script>
 @endsection

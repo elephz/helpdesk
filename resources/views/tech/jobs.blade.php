@@ -172,7 +172,7 @@
                                         <tbody>
                                             @foreach($hw as $key => $item)
                                             <tr>
-                                                <td>{{$key+1}}</td>
+                                                <td>{{$item->JobId}}</td>
                                                 <td align="center">
                                                     <div class="box-img">
                                                         <img src="{{$item->getCover()}}" class="w-100 shadow-sm rounded">
@@ -267,7 +267,7 @@
                     <table class="table table-bordered f-thai" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th align="center">#</th>
+                                <th class="text-center">#</th>
                                 <th>ประเภท</th>
                                 <th>วันที่แจ้ง</th>
                                 <th>ผู้แจ้ง</th>
@@ -279,7 +279,7 @@
                         <tbody>
                             @foreach($jobs as $key => $value)
                             <tr id="{{$value->id}}">
-                                <td align="center" id="index">{{$key+1}}</td>
+                                <td align="center" id="index">{{$value->JobId}}</td>
                                 <td>{{$value->JobType->name}}</td>
                                 <td>{{$value->formattedDate($value->created_at)}}</td>
                                 <td>{{$value->getUser->name}}</td>

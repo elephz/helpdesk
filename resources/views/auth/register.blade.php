@@ -17,13 +17,16 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('theme/backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200&display=swap" rel="stylesheet">
     <style>
         ul {
             list-style: none;
             margin: 0;
             padding: 0;
             overflow: auto;
-            display: inline-flex;
             width: 100%;
         }
 
@@ -97,6 +100,12 @@
         input[type=radio]:checked~label {
             color: #0DFF92;
         }
+
+        .f-thai {
+            font-family: 'Kanit', sans-serif !important;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -112,44 +121,13 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                <h1 class="h4 text-gray-900 mb-4 f-thai">สร้างบัญชีผู้ใช้งาน</h1>
                             </div>
-                            <!-- <form class="user">
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
-                                    </div>
-                                </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </a>
-                                <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
-                            </form> -->
-                            <form method="POST" action="{{ route('register') }}">
+                            <form method="POST" action="{{ route('register') }}" class="f-thai">
                                 @csrf
 
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Firstname') }}</label>
+                                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('ชื่อ') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -163,7 +141,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('lastname') }}</label>
+                                    <label for="lastname" class="col-md-4 col-form-label text-md-right">{{ __('นามสุกล') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror " name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname">
@@ -176,7 +154,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('อีเมล์') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
@@ -190,7 +168,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('รหัสผ่าน') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -204,7 +182,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('ยืนยันรหัสผ่าน') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -212,7 +190,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('ตำแหน่ง') }}</label>
                                     <div class="col-md-6">
                                         <ul>
                                             <li>
@@ -231,15 +209,15 @@
 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Register') }}
+                                        <button type="submit" class="btn btn-primary btn-block">
+                                            {{ __('สมัคสมาชิก') }}
                                         </button>
                                     </div>
                                 </div>
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="{{ route('login') }}">Already have an account? Login!</a>
+                                <a class="small f-thai" href="{{ route('login') }}">กลับสู่หน้าเข้าสู่ระบบ</a>
                             </div>
                         </div>
                     </div>

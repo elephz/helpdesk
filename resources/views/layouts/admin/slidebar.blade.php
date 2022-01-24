@@ -35,8 +35,8 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{route('admin.newtech')}}">New</a>
-                <a class="collapse-item" href="{{route('admin.allTech')}}">Active</a>
+                <a class="collapse-item f-thai" href="{{route('admin.newtech')}}">รอการอนุมัติ</a>
+                <a class="collapse-item f-thai" href="{{route('admin.allTech')}}">ทั้งหมด</a>
             </div>
         </div>
     </li>

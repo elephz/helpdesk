@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use DB;
+use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     public function index()
@@ -20,18 +20,21 @@ class UserController extends Controller
         try {
             $user = User::where('id', $request->data)->first();
             // dd($user->baned);
-            if ($user->baned) {
-                $user->baned = false;
-            } else {
-                $user->baned = true;
-            }
-            $user->save();
+            $user->baned = !$user->baned;
+            $user->update();
             DB::commit();
             return response()->json(["status" => true]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(["status" => false]);
         }
+    }
+
+    public function TechDetail($id)
+    {
+        $user = User::where('id', $id)->where('roleid',2)->where('acceptTeach','2')->first();
+        
+        return view('admin.tech')->with(['user'=>$user]);
     }
 
     public function profile($id)
@@ -64,6 +67,7 @@ class UserController extends Controller
     public function newTech()
     {
         $users = User::where('roleid','2')->where('acceptTeach','1')->get();
+       
         return view('admin.newTech')->with(['users' => $users]);
     }
 

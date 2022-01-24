@@ -1,6 +1,6 @@
 @extends('templates.admin')
 
-@section('title','Dashboard')
+@section('title','อุปกรณ์ทั้งหมด')
 
 @section('head')
 <link rel="stylesheet" type="text/css" href="{{ asset('theme/dropimage/dropify/dropify.min.css') }}">

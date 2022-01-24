@@ -121,12 +121,16 @@
                                 <td>{{$value->formattedDate($value->created_at)}}</td>
                                 <td align="center"> <span class='badge badge-pill badge-primary'> {{count($value->getTechCount)}}</span></td>
                                 <td align="center">
+                                    
                                     <label class="switch">
-                                        <input id="checkboxinp" value="{{$value->id}}" type="checkbox" {{($value->banned == 2) ? 'checked' : '' }}>
+                                        <input id="checkboxinp" value="{{$value->id}}" type="checkbox" {{($value->baned == 1) ? 'checked' : '' }}>
                                         <div class="slider round"></div>
                                     </label>
+                                    
                                 </td>
-                                <td align="center"><button class="btn btn-secondary btn-round px-4" onclick="edit('{{$value->id}}')"><i class="far fa-eye"></i></button></td>
+                                <td align="center">
+                                    <a href="{{route('admin.tech.Detail',$value->id)}}" class="btn btn-secondary btn-round px-4" ><i class="fas fa-arrow-right"></i> </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -187,7 +191,7 @@
                 data:data,
                 success: function(response) {
                     if (response.status) {
-                        
+                        console.log(response);
                     }
                 }
             });

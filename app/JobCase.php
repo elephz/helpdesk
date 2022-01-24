@@ -12,6 +12,11 @@ class JobCase extends Model
         return $this->hasOne(CaseType::class, 'id', 'caseTypeId');
     }
 
+    public function getJobIdAttribute()
+    {
+        return str_pad($this->id,5,'0',STR_PAD_LEFT);
+    }
+
     public function calculate($value, $max)
     {
         return  number_format(($value * 100) / $max, 2);

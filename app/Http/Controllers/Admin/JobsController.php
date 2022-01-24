@@ -29,6 +29,7 @@ class JobsController extends Controller
         try {
             $job = JobCase::where('id',$request->jobsid)->first();
             $job->techId = $request->techid;
+            $job->wage = $request->amount;
             $job->assginTime = Carbon::now();
             $job->save();
             DB::commit();

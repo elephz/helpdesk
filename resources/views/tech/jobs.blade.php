@@ -17,7 +17,7 @@
 
     .amount-price {
         display: grid;
-        grid-template-columns: 1fr 70px;
+        grid-template-columns: 1fr 100px;
         grid-gap: 10px;
         align-items: center;
     }
@@ -95,9 +95,7 @@
         line-height: 5px;
     }
 
-    .list-item ul li a:hover {
-        transform: scale(1.2);
-    }
+    
 
     textarea {
         resize: none;
@@ -405,6 +403,9 @@
             for (let i = 0; i < this.arr.length; i++) {
                 if (this.arr[i].id == obj.id) {
                     incard = true;
+                    if(this.arr[i].amount >= this.arr[i].total){
+                        return
+                    }
                     this.arr[i].amount++;
                     break;
                 }
@@ -477,7 +478,7 @@
                             <div class="d-flex justify-content-between align-items-center mr-3 text-center" id='touch'>
                                 <i class="fas fa-minus shadow-sm p-2 rounded-circle" onclick="obj.minus('${item.id}')"></i>
                                     <input type="hidden" name="product[]" value="${item.id}" >
-                                    <input type="number" name="amount[]" value="${item.amount}" class="form-control rounded border-0 w-50 text-dark">
+                                    <input type="number" name="amount[]" value="${item.amount}" class="form-control rounded border-0 w-25 text-dark">
                                 <i class="fas fa-plus shadow-sm p-2 rounded-circle" onclick="obj.plush('${item.id}')"></i>
                             </div>
                             <span id='total'> <h5> <b> ${item.amount * item.price} </b> </h5></span>

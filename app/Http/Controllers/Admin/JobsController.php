@@ -26,12 +26,13 @@ class JobsController extends Controller
 
     public function assignTech(Request $request)
     {
+       
         try {
             $job = JobCase::where('id',$request->jobsid)->first();
             $job->techId = $request->techid;
             $job->wage = $request->amount;
             $job->assginTime = Carbon::now();
-            $job->save();
+            $job->update();
             DB::commit();
             return response()->json(["status" => true]);
         } catch (\Exception $e) {

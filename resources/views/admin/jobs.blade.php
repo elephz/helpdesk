@@ -169,7 +169,7 @@
                                         <tbody>
                                             @foreach($tech as $key => $item)
                                             <tr>
-                                                <td align="center" id="index">{{$item->JobId}}</td>
+                                                <td align="center" id="index">{{$key+1}}</td>
                                                 <td class="text-left">{{$item->getFullname()}}</td>
                                                 <td>{{count($item->getTechCount)}}</td>
                                                 <td>
@@ -198,7 +198,7 @@
                             </li>
                             <li class="list-group-item d-flex flex-row  align-items-start border-0 pb-4">
                                 <span class='title text-left w-100'>ค่าแรง</span>
-                                <input type="number" name="amount" class="form-control text-right" value="0">
+                                <input type="number" name="amount" class="form-control text-right" value="0" min="0">
                             </li>
                             <li class="list-group-item d-flex flex-column  align-items-start border-0">
                                 <span class='badge badge-pill badge-primary px-3 py-2'>ช่างเทคนิค</span>

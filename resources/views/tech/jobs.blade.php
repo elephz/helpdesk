@@ -138,6 +138,9 @@
         font-size: 18px;
         font-weight: bold;
     }
+    input#techwage{
+        font-size: 16px !important;
+    }
 </style>
 @endsection
 
@@ -207,6 +210,10 @@
                                         <li class="list-group-item d-flex justify-content-between  border-0">
                                             <span>ค่าแรง</span>
                                             <span id='wage'>0</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between  border-0">
+                                            <span>บวกเพิ่มจากช่าง</span>
+                                            <input type="number" name="tech_wage" id="tech-wage" class='form-control w-25 border-0 text-right p-0' value="0">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between  border-0">
                                             <span>ค่าอุปกรณ์</span>
@@ -395,6 +402,7 @@
     var obj = {
         wage: 0,
         hardward: 0,
+        techwage:0,
         arr: [],
         addItem: function(obj, img) {
             console.log();
@@ -501,15 +509,24 @@
                 count += this.arr[i].price * this.arr[i].amount
             }
             this.hardward = count
-            $("ul.list-group li #wage").text(this.wage)
-            $("ul.list-group li #hard-ward").text(this.hardward)
-            $("ul.list-group li #total").text(this.hardward + this.wage)
+            $("ul.list-group li #wage").text(number_format(this.wage))
+            $("ul.list-group li #hard-ward").text(number_format(this.hardward))
+            $("ul.list-group li #total").text(number_format(+(this.hardward) + +(this.wage) + +(this.techwage)))
 
         }
 
     }
 
-
+    $("input#tech-wage").change(function(){
+        obj.techwage = $(this).val()
+        obj.calculate()
+    })
+    function number_format(number){
+        return Intl.NumberFormat('th-TH', {
+                style: 'currency',
+                currency: 'THB',
+            }).format(number)
+    }
     function successReport(id) {
         $.ajax({
             headers: {

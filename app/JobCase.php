@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-
+use App\Using_Eq;
 class JobCase extends Model
 {
     public function JobType()
@@ -17,6 +17,12 @@ class JobCase extends Model
         return str_pad($this->id,5,'0',STR_PAD_LEFT);
     }
   
+    public function Equipment()
+    {
+        $id = $this->id;
+        $result = Using_Eq::where('job_case_id',$id)->get();
+        return $result ? $result : [];
+    }
 
     public function calculate($value, $max)
     {
@@ -81,7 +87,7 @@ class JobCase extends Model
         }
 
         return asset('images/' . $this->image);
-    }
+    }           
 
     public function hardward()
     {
@@ -91,5 +97,19 @@ class JobCase extends Model
     public function getTotalAttribute()
     {
         return $this->wage + $this->hardward->sum('to_tal');
+    }
+
+    public function getHardwareReportAttribute()
+    {
+        $amount = 0;
+        $total = 0;
+
+        foreach($this->hardward as $item){
+            $total += $item->Total;
+            $amount += $item->amount;
+        }
+        $ordertotal = $total + $this->wage + $this->tech_wage;
+        return (object)['total'=>$total,'amount'=>$amount,'ordertotal'=>$ordertotal];
+
     }
 }

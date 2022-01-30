@@ -80,6 +80,7 @@ class JobsController extends Controller
                 $job->jobStatus = '3';
                 $job->successTime = Carbon::now();
                 $job->techId = $Userid;
+                $job->tech_wage = $request->tech_wage;
                 $job->note = $request->detail;
                 $job->update();
 

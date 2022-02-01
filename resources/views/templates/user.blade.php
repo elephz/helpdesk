@@ -34,7 +34,11 @@
     <link href="{{ asset('theme/backend/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('css/form.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-
+    <style>
+        .table tbody tr{
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -186,7 +190,7 @@
                 <div class="col-md-7 col-12">
                     <div class="shadow rounded p-3 bg-white">
                         <div class="table-responsive">
-                            <table class="table table-bordered f-thai" id="dataTable" width="100%" cellspacing="0">
+                            <table class="table table-bordered f-thai table-hover" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th align="center">#</th>
@@ -197,10 +201,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach($cases as $key => $case)
-                                    <tr>
-                                        <td align="center">{{$key+1}}</td>
+                                    <tr onclick="window.location.href='/user/job/{{$case->JobId}}'" >
+                                        <td align="center">{{$case->JobId}}</td>
                                         <td>{{$case->JobType->name}}</td>
-                                        <td>{{($case->getTech)? $case->getTech->name : ''}}</td>
+                                        <td>{{($case->getTech)? $case->getTech->getFullname() : ''}}</td>
                                         <td>
                                             <span class='badge {{$case->StatusColor()}} text-white py-2 px-3 '>{{$case->JobStatus()}}</span>
                                         </td>
@@ -275,8 +279,10 @@
             </div>
         </div>
     </section>
+
     <!-- personor Section-->
 
+  
     <!-- Footer-->
     <footer class="footer text-center">
         <div class="container">
@@ -340,6 +346,7 @@
                 "pageLength": 6,
                 "bLengthChange": false,
             });
+            
             toastr.options = {
                 'closeButton': true,
                 'debug': false,
@@ -359,7 +366,7 @@
             }
 
         });
-
+       
         $("body").on('submit', "#userForm", function(e) {
             e.preventDefault();
             let name = $("[name='name']").val();

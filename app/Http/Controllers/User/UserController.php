@@ -43,6 +43,15 @@ class UserController extends Controller
         ]);
     }
 
+    public function job($id)
+    {
+        $id = (int)$id;
+        $userId = Auth::id();
+        $db = JobCase::where('id',$id)->where('userId',$userId)->firstOrFail();
+        return view('user.job')->with(['job'=>$db]);
+    }
+
+
     public function update(Request $request)
     {
 

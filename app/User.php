@@ -104,4 +104,9 @@ class User extends Authenticatable
         if($this->roleid == 2 && $this->acceptTeach == 1) return [];
         return $this->hasMany(JobCase::class,'techId','id')->where('jobStatus','2') ;
     }
+
+    public function UserJob()
+    {
+        return $this->hasMany(JobCase::class,'userId','id');
+    }
 }

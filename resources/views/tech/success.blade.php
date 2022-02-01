@@ -28,8 +28,41 @@
     }
 
     .tree-flex .card {
-       width: 100%;
-       margin: 0 5px;
+        width: 100%;
+        margin: 0 5px;
+    }
+   
+    ul.eq-list .list-group-item  {
+        display: grid;
+        grid-template-columns: 100px 1fr 1fr;
+        grid-column-gap: 15px;
+        align-items: center;
+        justify-content: center;
+        align-items: center;
+       
+    }
+    
+    .scrollbar {
+        float: left;
+        height: 420px;
+        background: #F5F5F5;
+        overflow-y: scroll;
+        margin-bottom: 5px;
+    }
+
+    #style-4::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+        background-color: #F5F5F5;
+    }
+
+    #style-4::-webkit-scrollbar {
+        width: 5px;
+        background-color: #F5F5F5;
+    }
+
+    #style-4::-webkit-scrollbar-thumb {
+        background-color: #111;
+        border: 1px solid #555555;
     }
 </style>
 @endsection
@@ -44,7 +77,7 @@
     </div>
 
     <!-- Content Row -->
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-6">
             <div class="row">
                 <div class="col-md-6 col-12 mb-4 h-100">
@@ -106,7 +139,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mb-3">
                 <div class="d-flex justify-content-between tree-flex w-100">
                     <div class="card border-left-primary shadow py-2 ">
                         <div class="card-body">
@@ -156,6 +189,71 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="d-flex justify-content-between tree-flex w-100">
+                    <div class="card  shadow py-2 ">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-primary text-uppercase mb-1 f-thai">
+                                        ค่าแรงเริ่มต้น</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                            </div>
+                            <span>
+                                {{number_format($job->wage,2)}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card  shadow py-2 ">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-primary text-uppercase mb-1 f-thai">
+                                        ช่างเทคนิค</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+
+                            </div>
+                            <span>
+                            {{number_format($job->tech_wage,2)}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card  shadow py-2 ">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-primary text-uppercase mb-1 f-thai">
+                                        อุปกรณ์ ({{$job->HardwareReport->amount}}) ชิ้น</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+
+                            </div>
+                            <span>
+                            {{number_format($job->HardwareReport->total,2)}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card  shadow py-2 ">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="font-weight-bold text-primary text-uppercase mb-1 f-thai">
+                                        รวมทั้งสิ้น</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+
+                            </div>
+                            <span >
+                            {{number_format($job->HardwareReport->ordertotal,2)}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
@@ -165,7 +263,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1 f-thai">
-                                อุปกรณ์</div>
+                                รวมทั้งสินค้า</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                         </div>
                         <div class="col-auto">
@@ -173,10 +271,25 @@
                         </div>
                     </div>
                     <div class="row">
-
+                        <ul class='list-group eq-list f-thai my-3 w-100 scrollbar' id="style-4">
+                            @if(count($job->Equipment()) > 0)
+                            @foreach($job->Equipment() as $item)
+                            <li class="list-group-item  my-2">
+                                <img src="{{$item->equipment->getCover()}}" alt="" class="w-100 h-100">
+                                <p> {{$item->equipment->name}}</p>
+                                <div class="text-right">
+                                    {{$item->amount}} x {{number_format($item->equipment->price,2)}} <br>
+                                    {{number_format($item->amount * $item->equipment->price,2)}}
+                                </div>
+                            </li>
+                            @endforeach
+                            @endif()
+                        </ul>
                     </div>
+                    
                 </div>
             </div>
+           
         </div>
     </div>
 

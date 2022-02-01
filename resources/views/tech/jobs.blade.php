@@ -323,6 +323,9 @@
                                     <a href="{{route('tech.Jobs.success.detail',$value->id)}}" class="btn btn-success" title="สรุปการดำเนินงาน">
                                         <i class="fas fa-clipboard"></i>
                                     </a>
+                                    <a href="{{route('pdf',$value->id)}}" class="btn btn-secondary" target="_bank" title="ใบเสร็จ">
+                                        <i class="far fa-file-alt"></i>
+                                    </a>
 
                                     @break
 

@@ -31,6 +31,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'CheckBlocked'], function () {
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/receipt/pdf/{id}', 'ReceiptController@index')->name('pdf');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::group(['middleware' => 'Admin'], function () {
@@ -76,6 +77,8 @@ Route::group(['middleware' => 'User'], function () {
         Route::get('/', 'UserController@index')->name('user.dashboard');
         Route::post('/', 'JobCaseController@store')->name('user.store');
         Route::put('/update', 'UserController@update')->name('user.update');
+        Route::get('/job/{id}', 'UserController@job')->name('admin.job');
+
     });
 });
 

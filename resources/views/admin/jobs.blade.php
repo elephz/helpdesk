@@ -140,6 +140,11 @@
         letter-spacing: 2px;
         font-weight: bold;
     }
+    a.disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+
 </style>
 @endsection
 @section('modal')
@@ -269,6 +274,7 @@
                                 <th>ผู้แจ้ง</th>
                                 <th>สถานะ</th>
                                 <th>ช่าง</th>
+                                <th>ใบเสร็จ</th>
                                 <th>จัดการ</th>
                             </tr>
                         </thead>
@@ -299,6 +305,11 @@
                                         <span class="text-left w-100"> {{$value->getTech->getFullname() ?? ""}} </span>
                                     </button>
                                     @endif
+                                </td>
+                                <td align="center">
+                                    <a class="btn {{$value->jobStatus == '3' ? 'btn-primary' : 'btn-default disabled'}} " href="{{route('pdf',$value->id)}}" target="_bank"   >
+                                        <i class="far fa-file-alt"></i>
+                                    </a>
                                 </td>
                                 <td align="center">
                                     <a class="btn btn-primary" href="{{route('admin.jobs.detail',$value->id)}}">

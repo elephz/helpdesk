@@ -78,7 +78,8 @@
         -ms-transform: translateX(26px);
         transform: translateX(26px);
     }
-    li {
+
+    .content li {
         table-layout: fixed;
         padding: 10px 5px;
         display: table;
@@ -87,15 +88,16 @@
         font-weight: bold;
     }
 
-    li .info-list-title {
+    .content li .info-list-title {
         min-width: 108px;
         display: table-cell;
         color: #ff5938;
     }
 
-    li .info-list-text {
+    .content li .info-list-text {
         color: #888ea8;
     }
+
     /* Rounded sliders */
     .slider.round {
         border-radius: 34px;
@@ -104,35 +106,72 @@
     .slider.round:before {
         border-radius: 50%;
     }
+    .table tbody tr {
+        cursor: pointer;
+    }
 </style>
 @endsection
 
 @section('content')
 <div class="row">
-    <div class="col-md-10 col-12 mx-auto">
+    <div class="col-md-4 col-12 mx-auto">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold f-thai">user detail</h6>
+                <h6 class="m-0 font-weight-bold f-thai">ข้อมูลส่วนตัว</h6>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <ul class='list-unstyled mt-3'>
-                            <li>
-                                <span class='info-list-title'>ชื่อ</span>
-                                <span class='info-list-text'>{{$user->getFullname()}}</span>
-                            </li>
-                            <li>
-                                <span class='info-list-title'>โทรศัพท์</span>
-                                <span class='info-list-text'>{{$user->phone}}</span>
-                            </li>
-                            <li>
-                                <span class='info-list-title'>E-mail</span>
-                                <span class='info-list-text'>{{$user->email}}</span>
-                            </li>
-                        </ul>
-
-                    </div>
+                <div class="row content">
+                    <ul class='list-unstyled mt-3'>
+                        <li>
+                            <span class='info-list-title'>ชื่อ</span>
+                            <span class='info-list-text'>{{$user->getFullname()}}</span>
+                        </li>
+                        <li>
+                            <span class='info-list-title'>โทรศัพท์</span>
+                            <span class='info-list-text'>{{$user->phone}}</span>
+                        </li>
+                        <li>
+                            <span class='info-list-title'>อีเมล์</span>
+                            <span class='info-list-text'>{{$user->email}}</span>
+                        </li>
+                        <li>
+                            <span class='info-list-title'>ที่อยู่</span>
+                            <span class='info-list-text'>{{$user->address}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-12 mx-auto">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold f-thai">ประวัติการแจ้งซ่อม ({{$user->UserJob->count()}})</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered f-thai table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>ประเภทงาน</th>
+                                <th>ช่าง</th>
+                                <th>สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($user->UserJob as $key => $case)
+                            <tr onclick="window.location.href='/admin/jobs/detail/{{$case->id}}'" >
+                                <td class="text-center">{{$case->JobId}}</td>
+                                <td>{{$case->JobType->name}}</td>
+                                <td>{{($case->getTech)? $case->getTech->getFullname() : ''}}</td>
+                                <td>
+                                    <span class='badge {{$case->StatusColor()}} text-white py-2 px-3 '>{{$case->JobStatus()}}</span>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -144,27 +183,6 @@
 <script>
     $(document).ready(function() {
         $('#dataTable').DataTable();
-
-        $("body").on("change", ".switch", function() {
-            let val = $(this).find('input').val();
-            let data = {
-                'data': val
-            }
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                },
-                type: 'PUT',
-                url: `{{route('admin.putBanned')}}`,
-                data: data,
-                success: function(response) {
-                    if (response.status) {
-
-                    }
-                }
-            });
-        })
-
     });
 </script>
 @endsection

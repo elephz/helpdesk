@@ -29,11 +29,13 @@
     <!-- <link href="{{ asset('css/form.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <style>
-        .page-section {
-            margin-top: 6rem !important;
+        #portfolio {
+            margin-top: 11rem !important;
+        }
+        .page-section{
+            padding:0 !important;
         }
 
-      
 
         le>img {
             width: 100%;
@@ -50,7 +52,7 @@
             font-weight: bold;
         }
 
-        ul.list-unstyled li .info-list-title {
+        .info-list-title {
             min-width: 108px;
             display: table-cell;
             color: #ff5938;
@@ -67,7 +69,8 @@
             border: unset;
             border-radius: 15px !important;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-            align-items: center;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         li .info-list-text {
@@ -133,7 +136,7 @@
             align-items: center;
             justify-content: center;
             align-items: center;
-
+            
         }
 
         .scrollbar {
@@ -165,7 +168,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top"><i class="fas fa-cog"></i></a>
+            <a class="navbar-brand js-scroll-trigger" href="{{route('user.dashboard')}}"><i class="fas fa-home"></i></a>
             <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
@@ -185,7 +188,7 @@
         </div>
     </nav>
     <!-- Masthead-->
-    <section class="page-section portfolio pt-5" id="portfolio">
+    <section class="page-section portfolio pt-5 py-2" id="portfolio">
         <div class="container">
             <!-- Portfolio Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0 f-thai">{{$job->JobId}}</h2>
@@ -196,24 +199,24 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Portfolio Grid Items-->
-           
+
         </div>
     </section>
-    <section class="page-section bg-primary text-white mb-0 pt-5" id="about">
-        <div class="container">
-           
-            <!-- About Section Content-->
-           
-            <div class="row mb-4 full-width">
-                    <div class="col-md-5 col-12">
+    <section class="page-section  mb-0  mt-0" >
+        <!-- About Section Content-->
+
+        <div class="row mb-4 full-width">
+            <div class="container" style="max-width: 1500px;">
+                <div class="row">
+                    <div class="col-md-4 col-12">
                         <div class="row mb-3">
-                            <div style="height: 500px;">
+                            <div style="height: 500px;" class="mx-auto">
                                 <img src="{{$job->getImg()}}" alt="" class='mw-100 shadow rounded bg-white mh-100'>
                             </div>
                         </div>
 
                     </div>
-                    <div class="col-md-7 col-12">
+                    <div class="col-md-8 col-12">
                         <ul class='list-group alist f-thai'>
                             <li class="list-group-item list-group-item-action ">
                                 <h1>
@@ -291,13 +294,13 @@
                             </li>
                         </ul>
                         <ul class='list-group flist f-thai'>
-                            <li class="list-group-item list-group-item-action ">
+                            <li class="list-group-item list-group-item-action " id="style-4">
                                 <h1>
                                     <i class="fab fa-linkedin"></i>
                                 </h1>
                                 <div>
                                     <span class='info-list-title'>รายละเอียด</span>
-                                    <span class='info-list-text'>{{$job->caseDetail}}</span>
+                                    <span class='info-list-text'>{{$job->caseDetail}} Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos magni, alias beatae rem sed exercitationem. Similique debitis sunt modi veritatis eos, quaerat doloremque ipsum, recusandae odio voluptatem nemo. Vel, expedita.</span>
                                 </div>
                             </li>
                             <li class="list-group-item list-group-item-action ">
@@ -313,33 +316,27 @@
 
                     </div>
                 </div>
-            <!-- About Section Button-->
-        </div>
-    </section>
-    <!-- personor Section-->
-    <section class="page-section pt-5" id="contact">
-        <div class="container">
-            <!-- Contact Section Form-->
-            <div class="row h500 mb-4">
+                <hr>
+                <div class="row h500 mb-4">
                     <div class="col-4 h-100 bg-white">
                         <div class="row  f-thai">
-                            <p class="p-2">สรุปค่าใช้จ่าย</p>
+                            <p class="p-2 h2 f-thai"> <b> สรุปค่าใช้จ่าย</b></p>
                             <div class="col-12">
                                 <div class="d-flex justify-content-between align-items-center my-3 ">
                                     <p>ค่าแรงเริ่มต้น</p>
-                                    <p class="h4 text-right"><b>฿{{number_format($job->wage,2)}} </b></p>
+                                    <p class="h5 text-right">฿{{number_format($job->wage,2)}} </p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center my-3 ">
                                     <p>ช่างเทคนิค</p>
-                                    <p class="h4 text-right"><b>฿{{number_format($job->tech_wage,2)}}</b></p>
+                                    <p class="h5 text-right">฿{{number_format($job->tech_wage,2)}}</p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center my-3 ">
                                     <p>ค่าอุปกรณ์ ({{$job->HardwareReport->amount}}) ชิ้น</p>
-                                    <p class="h4 text-right"><b>฿{{number_format($job->HardwareReport->total,2)}}</b></p>
+                                    <p class="h5 text-right">฿{{number_format($job->HardwareReport->total,2)}}</p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center my-3 ">
                                     <p>รวมทั้งสิ้น</p>
-                                    <p class="h4 text-right"><b>฿{{number_format($job->HardwareReport->ordertotal,2)}}</b></p>
+                                    <p class="h5 text-right">฿{{number_format($job->HardwareReport->ordertotal,2)}}</p>
                                 </div>
 
 
@@ -348,30 +345,35 @@
                     </div>
                     <div class="col-8 bg-white border-left ">
                         <div class="row ">
-                            <div class="col-12  mt-2 ml-2">
-                                <p class="f-thai"><b>รายละเอียดการใช้อุปกรณ์</b></p>
-                            </div>
+                            <p class="f-thai h2 p-2"><b>รายละเอียดการใช้อุปกรณ์</b></p>
                             <div class="col-12 bg-white scrollbar border-top" id="style-4">
                                 <ul class='list-group eq-list f-thai my-3'>
                                     @if(count($job->Equipment()) > 0)
-                                    @foreach($job->Equipment() as $item)
-                                    <li class="list-group-item  my-2">
-                                        <img src="{{$item->equipment->getCover()}}" alt="" class="w-100 h-100">
-                                        <p> {{$item->equipment->name}}</p>
-                                        <div class="text-right">
-                                            {{$item->amount}} x {{number_format($item->equipment->price,2)}} <br>
-                                            {{number_format($item->amount * $item->equipment->price,2)}}
-                                        </div>
-                                    </li>
-                                    @endforeach
+                                        @foreach($job->Equipment() as $item)
+                                        <li class="list-group-item  my-2">
+                                            <img src="{{$item->equipment->getCover()}}" alt="" class="w-100 h-100">
+                                            <p> {{$item->equipment->name}}</p>
+                                            <div class="text-right">
+                                                {{$item->amount}} x {{number_format($item->equipment->price,2)}} <br>
+                                                {{number_format($item->amount * $item->equipment->price,2)}}
+                                            </div>
+                                        </li>
+                                        @endforeach
                                     @endif()
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
+
+
+        <!-- About Section Button-->
+
     </section>
+    <!-- personor Section-->
+
     <footer class="footer text-center">
         <div class="container">
             <div class="row full-width">
@@ -408,7 +410,25 @@
 
     <script src="{{ asset('theme/backend/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
-
+    <script>
+        $('#confirmBox').on('click', function(e) {
+            e.preventDefault();
+            swal({
+                title: 'ออกจากระบบ',
+                text: "ยืนยันการออกจากระบบ",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ปิด',
+                padding: '2em'
+            }).then(function(result) {
+                if (result.value) {
+                    $('#logout-form').submit();
+                }
+            })
+        })
+    </script>                    
 </body>
 
 </html>

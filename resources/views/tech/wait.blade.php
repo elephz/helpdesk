@@ -42,8 +42,13 @@
                 <div class="jumbotron my-5">
                     <h1 class="display-4">สมัครสมาชิกสำเร็จ</h1>
                     <p class="lead">
-                        กรุณารอการยืนยันจากผู้ดูและระบบ
+                        กรุณารอการยืนยันจากผู้ดูและระบบ 
                     </p>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                        @csrf
+                      
+                        <button class="btn btn-primary" >Logout</button>
+                    </form>
                 </div>
             </div>
         </div>

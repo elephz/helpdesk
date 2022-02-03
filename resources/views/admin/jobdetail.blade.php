@@ -19,7 +19,7 @@
         font-weight: bold;
     }
 
-    ul.list-unstyled li .info-list-title {
+    .info-list-title {
         min-width: 108px;
         display: table-cell;
         color: #ff5938;
@@ -31,12 +31,13 @@
 
     .list-group-item {
         display: grid;
-        grid-template-columns: 100px 1fr 1fr;
+        grid-template-columns: 100px 1fr ;
         grid-gap: 10px;
         border: unset;
         border-radius: 15px !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
         align-items: center;
+        overflow-y: auto;
     }
 
     li .info-list-text {
@@ -218,7 +219,7 @@
             </li>
         </ul>
         <ul class='list-group flist f-thai'>
-            <li class="list-group-item list-group-item-action ">
+            <li class="list-group-item list-group-item-action " id="style-4">
                 <h1>
                     <i class="fab fa-linkedin"></i>
                 </h1>
@@ -227,7 +228,7 @@
                     <span class='info-list-text'>{{$jobs->caseDetail}}</span>
                 </div>
             </li>
-            <li class="list-group-item list-group-item-action ">
+            <li class="list-group-item list-group-item-action " id="style-4">
                 <h1>
                     <i class="fas fa-map-marked-alt"></i>
                 </h1>

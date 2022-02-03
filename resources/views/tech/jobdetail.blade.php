@@ -96,6 +96,8 @@
                 <div>
                     <span class='info-list-title'>ประเภทงาน</span>
                     <span class='info-list-text'>{{$jobs->JobType->name}}</span>
+                    <span class='info-list-title pt-3'>ค่าแรง</span>
+                    <span class='info-list-text'>{{number_format($jobs->wage,2)}}</span>
                 </div>
             </li>
             <li class="list-group-item list-group-item-action ">
@@ -122,7 +124,9 @@
                 </h1>
                 <div>
                     @if($jobs->jobStatus == '1')
-                    <button class="btn btn-primary btn-block" onclick="acceptJob('{{$jobs->id}}')">
+                    <span class='info-list-title'>มอบหมายเมื่อ</span>
+                    <span class='info-list-text'> {{$jobs->formattedDate($jobs->assginTime)}}</span>
+                    <button class="btn btn-primary btn-block mt-3" onclick="acceptJob('{{$jobs->id}}')">
                         รับงาน
                     </button>
                     @else

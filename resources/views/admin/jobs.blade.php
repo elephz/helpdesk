@@ -225,7 +225,10 @@
                                         </div>
                                     </div>
                                 </button>
-                                <span class='al-msg shadow-sm'><i class="fas fa-exclamation-circle"></i> กรุณาเลือกช่างเทคนิค !!!</span>
+                                <span class='al-msg shadow-sm'>
+                                    <i class="fas fa-exclamation-circle"></i> 
+                                    <span id="err-msg"></span> 
+                                </span>
                             </li>
                         </ul>
                     </div>
@@ -299,6 +302,16 @@
                                         <i class="fas fa-user-edit"></i>
                                         <span class="text-left w-100"> {{$value->getTech->getFullname() ?? ""}} </span>
                                     </button>
+                                    @elseif($value->jobStatus == 4)
+                                    <div class="d-flex">
+                                        <button class="btn btn-success  w-75 button-test btn-grid mr-2">
+                                            <i class="fas fa-check"></i>
+                                            <span class="text-left w-100"> {{$value->getTech->getFullname() ?? ""}} </span>
+                                        </button>
+                                        <button class="btn btn-primary w-25 button-test ml-2" onclick="customModal({{$value}},'{{$value->JobStatus()}}')">
+                                            <i class="far fa-plus-square"></i>
+                                        </button>
+                                    </div>
                                     @else
                                     <button class="btn btn-success  btn-block button-test btn-grid">
                                         <i class="fas fa-check"></i>
@@ -361,9 +374,18 @@
     function save() {
         const techid = $(".jobinfo input[name='t_id']").val()
         const jobsid = $(".jobinfo input[name='job_id']").val()
-        const amount = $(".jobinfo input[name='amount']").val()
+        const amount = +($(".jobinfo input[name='amount']").val())
 
         if (!techid || !jobsid ) {
+            $("#err-msg").text("กรุณาเลือกช่างเทคนิค !!!")
+            $("span.al-msg").css('opacity', '1')
+            setTimeout(() => {
+                $("span.al-msg").css('opacity', '0')
+            }, 3000)
+            return
+        }
+        if(amount < 1) {
+            $("#err-msg").text("จำนวนค่าแรงต้องไม่ติดลบ !!!")
             $("span.al-msg").css('opacity', '1')
             setTimeout(() => {
                 $("span.al-msg").css('opacity', '0')
@@ -382,7 +404,7 @@
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
             },
             type: 'PUT',
-            url: `{{route('admin.jobs.assignTech')}}`,
+            url: `jobs/assignTech`,
             data: data,
             success: function(response) {
                 if (response.status) {

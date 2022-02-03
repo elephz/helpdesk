@@ -173,7 +173,15 @@
     <div class="flex-container">
         <div class="flex-item-invoice">
             <div class="flex-container text-center">
-                <span class="f24 "> <b> ใบเสร็จรับเงิน </b></span>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="text-center ">
+                                <span style="font-size: 24px;font-weight:bold">ใบเสร็จรับเงิน</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="flex-container" style="margin-bottom: 10px;">
                 <div class="d-item" style="text-align: left;width:40%">
@@ -215,7 +223,7 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width: 10%;">ลำดับ</th>
-                    <th class="text-left pl-3" style="width: 40%;">สินค้า</th>
+                    <th class="text-left pl-3" style="width: 40%;">อุปกรณ์</th>
                     <th class="text-right" style="width: 20%;">ราคาต่อหน่วย</th>
                     <th class="text-right" style="width: 10%;">จำนวน</th>
                     <th class="text-right pr-3" style="width: 25%;">
@@ -227,11 +235,11 @@
                 @if(count($job->Equipment()) > 0)
                     @foreach($job->Equipment() as $key => $value)
                     <tr>
-                        <td class="text-center" >{{$key+1}}</td>
-                        <td class="text-left" >{{$value->equipment->name}}</td>
-                        <td class="text-right" >{{number_format($value->equipment->price,2)}}</td>
-                        <td class="text-right" >{{$value->amount}}</td>
-                        <td class="text-right" >{{number_format($value->equipment->price * $value->amount,2)}}</td>
+                        <td class="text-center" style="width: 10%;">{{$key+1}}</td>
+                        <td class="text-left " style="width: 40%;padding-left:15px">{{$value->equipment->name}}</td>
+                        <td class="text-right" style="width: 20%;">{{number_format($value->equipment->price,2)}}</td>
+                        <td class="text-right" style="width: 10%;">{{$value->amount}}</td>
+                        <td class="text-right " style="width: 25%;padding-right:15px">{{number_format($value->equipment->price * $value->amount,2)}}</td>
                     </tr>
                     @endforeach
                 @endif
@@ -240,7 +248,7 @@
         </table>
         
     </div>
-    <div class="ftable">
+    <div class="ftable" style="padding-right:15px">
             <table>
                 <tbody>
                     <tr class="border-none " >

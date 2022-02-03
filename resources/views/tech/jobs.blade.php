@@ -212,7 +212,7 @@
                                             <span id='wage'>0</span>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between  border-0">
-                                            <span>บวกเพิ่มจากช่าง</span>
+                                            <span>เพิ่มเติมจากช่าง</span>
                                             <input type="number" name="tech_wage" id="tech-wage" class='form-control w-25 border-0 text-right p-0' value="0">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between  border-0">

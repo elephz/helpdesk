@@ -34,6 +34,7 @@ class UserController extends Controller
             array_push($graph_data, $value->data);
             
         }
+       
         return view('templates.user')->with([
             "selects" => CaseType::all(), 
             "user" => $user,

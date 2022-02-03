@@ -49,6 +49,10 @@
                     <p class="lead">
                         กรุณาติดต่อผู้ดูและระบบ
                     </p>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                        @csrf
+                        <button class="btn btn-primary" >Logout</button>
+                    </form>
                 </div>
             </div>
         </div>

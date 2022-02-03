@@ -26,7 +26,7 @@ class JobsController extends Controller
 
     public function assignTech(Request $request)
     {
-       
+      
         try {
             $job = JobCase::where('id',$request->jobsid)->first();
             $job->techId = $request->techid;
@@ -37,7 +37,7 @@ class JobsController extends Controller
             return response()->json(["status" => true]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(["status" => false]);
+            return response()->json(["status" => false,'msg'=>$e->getMessage()]);
         }
        
     }

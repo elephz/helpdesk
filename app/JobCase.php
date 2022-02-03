@@ -71,10 +71,10 @@ class JobCase extends Model
         return $this->hasOne(User::class, 'id', 'techId') ?? " ";
     }
 
-    public function getCover()
-    {
-        return $this->hasOne(User::class, 'id', 'techId');
-    }
+    // public function getCover()
+    // {
+    //     return $this->hasOne(User::class, 'id', 'techId');
+    // }
 
     public function getImg()
     {

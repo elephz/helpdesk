@@ -183,7 +183,7 @@
                                                 <td align="right">{{$item->amount}}</td>
                                                 <td align="right">{{number_format($item->price,2)}}</td>
                                                 <td>
-                                                    <button class="btn btn-success" onclick="obj.addItem({{$item}},'{{$item->getCover()}}')">
+                                                    <button class="btn btn-success" {{$item->amount < 1 ? 'disabled' : ''}}  onclick="obj.addItem({{$item}},'{{$item->getCover()}}')">
                                                         <i class="far fa-arrow-alt-circle-right"></i>
                                                     </button>
                                                 </td>
@@ -410,7 +410,8 @@
         addItem: function(obj, img) {
             console.log();
             let incard = false;
-
+            if(obj.amount < 1 ) return;
+           console.log(obj);
             for (let i = 0; i < this.arr.length; i++) {
                 if (this.arr[i].id == obj.id) {
                     incard = true;

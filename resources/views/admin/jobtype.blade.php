@@ -41,6 +41,24 @@
     </div>
 </div>
 @endif
+@if (count($errors))
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            บันทึกไม่สำเร็จ
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+        </div>
+    </div>
+</div>
+@endif
 <!-- alert row -->
 <!-- modal insert-->
 <div class="modal fade" id="ModalInsert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

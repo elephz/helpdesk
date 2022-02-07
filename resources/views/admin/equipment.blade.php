@@ -59,7 +59,8 @@
         height: 100%;
         object-fit: cover;
     }
-    .table .tbody td{
+
+    .table .tbody td {
         vertical-align: middle !important;
     }
 </style>
@@ -76,6 +77,25 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
+
+        </div>
+    </div>
+</div>
+@endif
+@if (count($errors))
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+            บันทึกไม่สำเร็จ
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
         </div>
     </div>
 </div>
@@ -140,7 +160,7 @@
                                 <th>ราคา</th>
                                 <th>จำนวน</th>
                                 <th align="center">จัดการ</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody class="tbody">
@@ -149,12 +169,12 @@
                                 <td align="center">{{$key+1}}</td>
                                 <td align="center">
                                     <div class="box-img" onclick="showimage('{{$item->name}}','{{$item->getCover()}}')">
-                                        <img src="{{$item->getCover()}}" class="w-100 shadow-sm rounded">
+                                        <img src="{{$item->getCover()}}" class="mw-100 mh-100 shadow-sm rounded">
                                     </div>
                                 </td>
                                 <td>{{$item->name}}</td>
-                                <td  align="right">{{number_format($item->price,2)}}</td>
-                                <td  align="right" >{{$item->amount}}</td>
+                                <td align="right">{{number_format($item->price,2)}}</td>
+                                <td align="right">{{$item->amount}}</td>
                                 <td align="center">
                                     <button class="btn btn-primary btn-round btn-block px-4" onclick="edit({{$item}},'{{$item->getCover()}}')"><i class="far fa-edit"></i></button>
                                     <button class="btn btn-danger btn-round btn-block px-4" onclick="remove('{{$item->id}}','{{$item->name}}')"><i class="far fa-trash-alt"></i></button>
@@ -276,9 +296,9 @@
                     type: 'DELETE',
                     url: `equipment/delete/${id}`,
                     success: function(response) {
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             row.fadeOut('fast')
-                        },200)
+                        }, 200)
                     }
                 });
             }
@@ -286,12 +306,12 @@
     }
     $("body").on('click', "#btn-save-insert", function(e) {
         e.preventDefault();
-        
+
         $("#ModalInsert").modal('hide')
         setTimeout(() => {
             $(this).closest('form').submit();
         }, 500)
-       
+
     });
     $("body").on('click', "#btn-save-edit", function(e) {
         e.preventDefault();

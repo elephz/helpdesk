@@ -21,12 +21,12 @@ class EquipmentController extends Controller
     {
         try {
             $e = Equipment::where('id', $id)->first();
-            
-            if($e->image){
-                $image_path = public_path()."/images/".$e->image;
+
+            if ($e->image) {
+                $image_path = public_path() . "/images/" . $e->image;
                 unlink($image_path);
             }
-          
+
             $e->delete();
             DB::commit();
             return response()->json(["status" => true]);
@@ -38,6 +38,19 @@ class EquipmentController extends Controller
 
     public function update(Request $request)
     {
+        $rules = [
+            'name' => 'unique:equipment,name',
+            'amount' => 'required',
+            'price'    => 'required'
+        ];
+
+        $messages = [
+            'required'  => 'The :attribute field is required.',
+            'unique'    => 'equipment :attribute is already used'
+        ];
+        
+        $request->validate($rules, $messages);
+        
         try {
             $e = Equipment::where('id', $request->id)->first();
             $e->name = $request->name;
@@ -50,18 +63,30 @@ class EquipmentController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Session::flash('message', 'แก้ไขไม่สำเร็จ');
+            Session::flash('message', 'แก้ไขไม่สำเร็จ: ' . $e->getMessage());
             Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }
     }
     public function store(Request $request)
     {
+        $rules = [
+            'name' => 'unique:equipment,name',
+            'amount' => 'required',
+            'price'    => 'required'
+        ];
+
+        $messages = [
+            'required'  => 'The :attribute field is required.',
+            'unique'    => 'equipment :attribute is already used'
+        ];
+        
+        $request->validate($rules, $messages);
 
         try {
             $e = new Equipment;
 
-            if($request->has('select_file')){
+            if ($request->has('select_file')) {
                 $image = $request->file('select_file');
                 $new_name = rand() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $new_name);
@@ -78,7 +103,7 @@ class EquipmentController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Session::flash('message', 'บันทึกไม่สำเร็จ');
+            Session::flash('message', 'บันทึกไม่สำเร็จ: ' . $e->getMessage());
             Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }

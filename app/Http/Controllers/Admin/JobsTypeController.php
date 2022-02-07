@@ -19,7 +19,15 @@ class JobsTypeController extends Controller
     
     public function update(Request $request)
     {
-  
+        $rules = [
+            'ed_jobtype' => 'unique:case_types,name',
+        ];
+
+        $messages = [
+            'unique'    => 'type name is already used'
+        ];
+        
+        $request->validate($rules, $messages);
         try {
             $job = CaseType::where('id', $request->ed_id)->first();
             $job->name = $request->ed_jobtype;
@@ -30,7 +38,7 @@ class JobsTypeController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollBack();
-            Session::flash('message', 'แก้ไขไม่สำเร็จ');
+            Session::flash('message', 'แก้ไขไม่สำเร็จ'.$e->getMessage());
             Session::flash('alert-class', 'alert-danger');
             return redirect()->back();
         }
@@ -46,7 +54,16 @@ class JobsTypeController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        $rules = [
+            'name' => 'unique:case_types,name',
+        ];
+
+        $messages = [
+            'unique'    => 'type :attribute is already used'
+        ];
+        
+        $request->validate($rules, $messages);
+
         try {
             $job = new CaseType;
             $job->name = $request->name;
